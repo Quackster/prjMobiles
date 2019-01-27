@@ -42,9 +42,10 @@ namespace Squirtle.Network
                 ServerBootstrap bootstrap = new ServerBootstrap()
                     .Group(bossGroup, workerGroup)
                     .Channel<TcpServerSocketChannel>()
-                    .ChildHandler(new ActionChannelInitializer<IChannel>(channel =>
+                    .ChildHandler(new GameChanelInitializer())/*new ActionChannelInitializer<IChannel>(channel =>
+                        channel.Pipeline.AddLast("gameEncoder", new NetworkEncoder()),
                         channel.Pipeline.AddLast("ClientHandler", new GameNetworkHandler())
-                    ))
+                    ))*/
                     .ChildOption(ChannelOption.TcpNodelay, true)
                     .ChildOption(ChannelOption.SoKeepalive, true)
                     .ChildOption(ChannelOption.SoReuseaddr, true)

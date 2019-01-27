@@ -1,6 +1,7 @@
 ﻿using DotNetty.Buffers;
 using DotNetty.Transport.Channels;
 using System;
+using System.Text;
 
 namespace Squirtle.Network
 {
@@ -11,6 +12,7 @@ namespace Squirtle.Network
             base.ChannelActive(ctx);
 
             Squirtle.Logger.Debug($"Client connected to server: {ctx.Channel.RemoteAddress}");
+            ctx.Channel.WriteAndFlushAsync(Unpooled.CopiedBuffer(Encoding.GetEncoding(0).GetBytes("#HELLO##")));
         }
 
         public override void ChannelInactive(IChannelHandlerContext ctx)
@@ -24,7 +26,6 @@ namespace Squirtle.Network
 
         public override void ChannelRead(IChannelHandlerContext ctx, object msg)
         {
-            IByteBuffer message = msg as IByteBuffer;
             base.ChannelRead(ctx, msg);
         }
 
