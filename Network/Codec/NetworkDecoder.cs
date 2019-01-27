@@ -11,7 +11,6 @@ namespace Squirtle.Network
     {
         protected override void Decode(IChannelHandlerContext context, IByteBuffer input, List<object> output)
         {
-            Console.WriteLine("test 123");
             if (input.ReadableBytes < 4)
                 return;
 

@@ -4,7 +4,7 @@ using System;
 
 namespace Squirtle.Network
 {
-    internal class GameChanelInitializer : ChannelInitializer<IChannel>
+    internal class GameChannelInitializer : ChannelInitializer<IChannel>
     {
         protected override void InitChannel(IChannel channel)
         {
