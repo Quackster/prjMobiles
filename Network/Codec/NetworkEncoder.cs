@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
@@ -16,6 +17,11 @@ namespace Squirtle.Network.Codec
                 {
                     byte[] messageData = (byte[])message;
                     context.WriteAndFlushAsync(Unpooled.CopiedBuffer(messageData));
+                }
+
+                if (message is string)
+                {
+                    context.WriteAndFlushAsync(Unpooled.CopiedBuffer(Encoding.GetEncoding(0).GetBytes((string)message)));
                 }
             }
             catch (Exception ex)

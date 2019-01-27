@@ -15,7 +15,7 @@ namespace Squirtle.Network
             base.ChannelActive(ctx);
 
             log.Debug($"Client connected to server: {ctx.Channel.RemoteAddress}");
-            ctx.Channel.WriteAndFlushAsync(Encoding.GetEncoding(0).GetBytes("#HELLO##"));
+            ctx.Channel.WriteAndFlushAsync("#HELLO##");
         }
 
         public override void ChannelInactive(IChannelHandlerContext ctx)
@@ -31,8 +31,14 @@ namespace Squirtle.Network
         {
             if (msg is string)
             {
-                string messageString = (string)msg;
-                log.Debug("Message received: " + messageString);
+                string message = (string)msg;
+                log.Debug("Message received: " + message);
+
+                if (message.StartsWith("VERSIONCHECK"))
+                {
+                    ctx.Channel.WriteAndFlushAsync("#ENCRYPTION_OFF##");
+                    ctx.Channel.WriteAndFlushAsync("#SECRET_KEY\r1337##");
+                }
             }
 
             base.ChannelRead(ctx, msg);
