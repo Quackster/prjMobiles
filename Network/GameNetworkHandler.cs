@@ -10,14 +10,14 @@ namespace Squirtle.Network
         {
             base.ChannelActive(ctx);
 
-            Squirtle.Logger.Debug($"Client connected to client: {ctx.Channel.RemoteAddress}");
+            Squirtle.Logger.Debug($"Client connected to server: {ctx.Channel.RemoteAddress}");
         }
 
         public override void ChannelInactive(IChannelHandlerContext ctx)
         {
             base.ChannelInactive(ctx);
 
-            Squirtle.Logger.Debug($"Client disconnected from client: {ctx.Channel.RemoteAddress}");
+            Squirtle.Logger.Debug($"Client disconnected from server: {ctx.Channel.RemoteAddress}");
         }
 
         public override void ChannelReadComplete(IChannelHandlerContext context) => context.Flush();
