@@ -15,7 +15,7 @@ namespace Squirtle.Network
             base.ChannelActive(ctx);
 
             log.Debug($"Client connected to server: {ctx.Channel.RemoteAddress}");
-            ctx.Channel.WriteAndFlushAsync(Unpooled.CopiedBuffer(Encoding.GetEncoding(0).GetBytes("#HELLO##")));
+            ctx.Channel.WriteAndFlushAsync(Encoding.GetEncoding(0).GetBytes("#HELLO##"));
         }
 
         public override void ChannelInactive(IChannelHandlerContext ctx)
