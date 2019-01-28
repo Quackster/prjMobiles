@@ -36,6 +36,11 @@ namespace Squirtle.Network
         {
             base.ChannelInactive(ctx);
 
+            Player player = ctx.Channel.GetAttribute<Player>(PLAYER_KEY).Get();
+
+            if (player == null)
+                return;
+
             log.Debug($"Client disconnected from server: {ctx.Channel.RemoteAddress}");
         }
 
