@@ -40,10 +40,20 @@ namespace Squirtle.Network.Streams
         /// </summary>
         /// <param name="messageHeader">the header requested</param>
         /// <param name="messageData">the data sent from client</param>
-        public Response(string Header)
+        public Response(string header)
         {
-            _header = Header;
+            _header = header;
             _buffer = new StringBuilder();
+        }
+
+        /// <summary>
+        /// Static method for creating response.
+        /// </summary>
+        /// <param name="header">the header for the response</param>
+        /// <returns></returns>
+        public static Response Init(string header)
+        {
+            return new Response(header);
         }
 
         /// <summary>

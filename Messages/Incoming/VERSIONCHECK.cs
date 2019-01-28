@@ -10,8 +10,12 @@ namespace Squirtle.Messages
         {
             if (request.GetArgument(0) == "client002" || request.GetArgument(0) == "client003")
             {
-                player.Send(new Response("ENCRYPTION_OFF"));
-                player.Send(new Response("SECRET_KEY\r1337"));
+                Response response = Response.Init("ENCRYPTION_OFF");
+                player.Send(response);
+
+                response = Response.Init("SECRET_KEY");
+                response.AppendNewArgument("1337");
+                player.Send(response);
             }
         }
     }

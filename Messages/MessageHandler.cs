@@ -19,6 +19,8 @@ namespace Squirtle.Messages
         {
             _messages = new Dictionary<string, IMessage>();
             _messages.Add("VERSIONCHECK", new VERSIONCHECK());
+            _messages.Add("LOGIN", new LOGIN());
+            _messages.Add("INFORETRIEVE", new INFORETRIEVE());
         }
 
         /// <summary>

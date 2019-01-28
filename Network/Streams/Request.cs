@@ -54,7 +54,12 @@ namespace Squirtle.Network.Streams
         /// <returns>the argument</returns>
         public string GetArgument(int index, char delimeter = ' ')
         {
-            return _data.Split(delimeter)[index];
+            var delimetered = _data.Split(delimeter);
+
+            if (delimetered.Length >= index)
+                return delimetered[index];
+
+            return null;
         }
     }
 }
