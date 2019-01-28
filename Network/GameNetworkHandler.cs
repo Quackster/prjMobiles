@@ -25,7 +25,7 @@ namespace Squirtle.Network
             ctx.Channel.GetAttribute<Player>(PLAYER_KEY).SetIfAbsent(new Player(ctx.Channel));
 
             log.Debug($"Client connected to server: {ctx.Channel.RemoteAddress}");
-            ctx.Channel.WriteAndFlushAsync("#HELLO##");
+            ctx.Channel.WriteAndFlushAsync(new Response("HELLO"));
         }
 
         /// <summary>

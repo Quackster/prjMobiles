@@ -4,21 +4,27 @@ using System.Text;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
+using log4net;
 using Squirtle.Network.Streams;
 
 namespace Squirtle.Network.Codec
 {
-    internal class NetworkEncoder : MessageToMessageEncoder<Response>
+    internal class NetworkEncoder : MessageToMessageEncoder<object>
     {
-        protected override void Encode(IChannelHandlerContext context, Response response, List<object> output)
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        protected override void Encode(IChannelHandlerContext context, object msg, List<object> output)
         {
-            try
+            if (msg is Response)
             {
-                context.WriteAndFlushAsync(Unpooled.CopiedBuffer(Encoding.GetEncoding(0).GetBytes(response.GetMessage())));
-            }
-            catch (Exception ex)
-            {
-                Squirtle.Logger.Error(ex);
+                try
+                {
+                    context.WriteAndFlushAsync(Unpooled.CopiedBuffer(Encoding.GetEncoding(0).GetBytes(msg.GetMessage())));
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
             }
         }
     }
