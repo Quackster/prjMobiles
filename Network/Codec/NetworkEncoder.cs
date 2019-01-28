@@ -15,16 +15,17 @@ namespace Squirtle.Network.Codec
 
         protected override void Encode(IChannelHandlerContext context, object msg, List<object> output)
         {
-            if (msg is Response)
+            try
             {
-                try
+                if (msg is Response)
                 {
-                    context.WriteAndFlushAsync(Unpooled.CopiedBuffer(Encoding.GetEncoding(0).GetBytes(msg.GetMessage())));
+                    Response response = (Response)msg;
+                    context.WriteAndFlushAsync(Unpooled.CopiedBuffer(Encoding.GetEncoding(0).GetBytes(response.GetMessage())));
                 }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
             }
         }
     }
