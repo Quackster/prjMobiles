@@ -10,11 +10,17 @@ namespace Squirtle.Storage.Access
 {
     class PlayerDao
     {
-        public static List<PlayerData> GetAllMyTable()
+        /// <summary>
+        /// Get if the login was successful
+        /// </summary>
+        /// <param name="username">the username requested</param>
+        /// <param name="password">the password request</param>
+        /// <returns>the login data, null if login was invalid</returns>
+        public static PlayerData TryLogin(string username, string password)
         {
             using (var connection = Database.Instance().GetConnection())
             {
-                return connection.Query<PlayerData>("SELECT * FROM users").AsList();
+                return connection.QueryFirstOrDefault<PlayerData>("SELECT * FROM users WHERE username = @username", new { username });
             }
         }
     }
