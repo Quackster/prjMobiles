@@ -54,7 +54,7 @@ namespace Squirtle.Game.Players
             if (obj is Response)
                 response = (Response)obj;
 
-            _log.Debug(string.Format("Sent: {0} {1}", response.Header, response.Body));
+            _log.Debug(string.Format("Sent: {0}{1}", response.Header, response.Body));
         }
     }
 }

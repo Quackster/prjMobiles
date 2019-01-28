@@ -32,7 +32,15 @@ namespace Squirtle.Network.Streams
         /// </summary>
         public string Body
         {
-            get { return _buffer.ToString(); }
+            get
+            {
+                string consoleBody = _buffer.ToString();
+
+                for (int i = 0; i < 14; i++)
+                    consoleBody = consoleBody.Replace("" + (char)i, "{" + i + "}");
+
+                return consoleBody;
+            }
         }
 
         /// <summary>
