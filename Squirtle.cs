@@ -3,6 +3,7 @@ using log4net.Config;
 using Squirtle.Game.Players;
 using Squirtle.Messages;
 using Squirtle.Network;
+using Squirtle.Storage;
 using System;
 using System.IO;
 using System.Reflection;
@@ -34,6 +35,22 @@ namespace Squirtle
 
             log.Info("Booting prjSquirtle - Written by Quackster");
             log.Info("Habbo Hotel 2001 emulation of V1");
+
+            Exception exception = null;
+            log.Info("Attempting to connect to MySQL database");
+
+            if (!Database.Instance().HasConnection(ref exception))
+            {
+                log.Fatal("Connection to database failed, could not start server");
+                log.Error(exception.ToString());
+
+                Console.Read();
+                return;
+            }
+            else
+            {
+                log.Info("Connection to MySQL was successful!");
+            }
 
             PlayerManager.Instance();
             MessageHandler.Instance();

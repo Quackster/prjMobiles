@@ -11,8 +11,9 @@ namespace Squirtle.Util.Logging
         {
             renderedLayout = renderedLayout.Replace(" INFO ", " |DarkGreen|INFO|Gray| ");
             renderedLayout = renderedLayout.Replace(" DEBUG ", " |Blue|DEBUG|Gray|  ");
-            renderedLayout = renderedLayout.Replace(" WARN ", " |DarkYellow|DEBUG|Gray|  ");
-            renderedLayout = renderedLayout.Replace(" ERROR ", " |DarkRed|ERROR|Gray|  ");
+            renderedLayout = renderedLayout.Replace(" WARN ", " |Yellow|WARN|Gray|  ");
+            renderedLayout = renderedLayout.Replace(" ERROR ", " |DarkYellow|ERROR|Gray|  ");
+            renderedLayout = renderedLayout.Replace(" FATAL ", " |DarkRed|FATAL|Gray|  ");
             return renderedLayout;
         }
 
