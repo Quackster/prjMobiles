@@ -30,6 +30,8 @@ namespace Squirtle
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
+            Console.Title = "prjSquirtle - Habbo Hotel Emulation";
+
             log.Info("Booting prjSquirtle - Written by Quackster");
             log.Info("Habbo Hotel 2001 emulation of V1");
 
