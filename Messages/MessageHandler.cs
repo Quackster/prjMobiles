@@ -32,7 +32,7 @@ namespace Squirtle.Messages
         {
             try
             {
-                _log.Debug(string.Format("Message received: {0} {1}", request.Header, request.Body));
+                _log.Debug(string.Format("Received: {0} {1}", request.Header, request.Body));
 
                 if (_messages.ContainsKey(request.Header))
                     _messages[request.Header].Handle(player, request);
