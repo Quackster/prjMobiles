@@ -18,23 +18,30 @@ namespace Squirtle.Network
         private MultithreadEventLoopGroup bossGroup;
         private MultithreadEventLoopGroup workerGroup;
 
-        public static GameServer Instance
+        /// <summary>
+        /// Invoke the singleton instance
+        /// </summary>
+        public static GameServer Instance()
         {
-            get
-            {
-                if (gameServer == null)
-                    gameServer = new GameServer();
+            if (gameServer == null)
+                gameServer = new GameServer();
 
-                return gameServer;
-            }
+            return gameServer;
         }
 
+        /// <summary>
+        /// GameServer constructor
+        /// </summary>
         public GameServer()
         {
             this.bossGroup = new MultithreadEventLoopGroup(1);
             this.workerGroup = new MultithreadEventLoopGroup(10);
         }
 
+        /// <summary>
+        /// Initialise the game server by given pot
+        /// </summary>
+        /// <param name="port">the game port</param>
         public void InitialiseServer(int port)
         {
             try

@@ -1,5 +1,6 @@
 ﻿using log4net;
 using log4net.Config;
+using Squirtle.Game.Players;
 using Squirtle.Network;
 using System;
 using System.IO;
@@ -24,7 +25,8 @@ namespace Squirtle
             log.Info("Booting prjSquirtle - Written by Quackster");
             log.Info("Habbo Hotel 2001 emulation of V1");
 
-            GameServer.Instance.InitialiseServer(37120);
+            PlayerManager.Instance();
+            GameServer.Instance().InitialiseServer(37120);
 
             Console.Read();
         }
