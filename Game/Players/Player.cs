@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Squirtle.Game.Players
 {
-    class Player
+    public class Player
     {
         private IChannel _channel;
 

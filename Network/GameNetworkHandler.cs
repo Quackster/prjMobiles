@@ -1,6 +1,9 @@
 ﻿using DotNetty.Buffers;
+using DotNetty.Common.Utilities;
 using DotNetty.Transport.Channels;
 using log4net;
+using Squirtle.Game.Players;
+using Squirtle.Messages;
 using Squirtle.Network.Streams;
 using System;
 using System.Text;
@@ -9,6 +12,7 @@ namespace Squirtle.Network
 {
     internal class GameNetworkHandler : ChannelHandlerAdapter
     {
+        private static AttributeKey<Player> PLAYER_KEY = AttributeKey<Player>.NewInstance("PLAYER_KEY");
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
@@ -18,6 +22,7 @@ namespace Squirtle.Network
         public override void ChannelActive(IChannelHandlerContext ctx)
         {
             base.ChannelActive(ctx);
+            ctx.Channel.GetAttribute<Player>(PLAYER_KEY).SetIfAbsent(new Player(ctx.Channel));
 
             log.Debug($"Client connected to server: {ctx.Channel.RemoteAddress}");
             ctx.Channel.WriteAndFlushAsync("#HELLO##");
@@ -41,16 +46,15 @@ namespace Squirtle.Network
         /// <param name="msg">the incoming message</param>
         public override void ChannelRead(IChannelHandlerContext ctx, object msg)
         {
+            Player player = ctx.Channel.GetAttribute<Player>(PLAYER_KEY).Get();
+
+            if (player == null)
+                return;
+
             if (msg is Request)
             {
                 Request request = (Request)msg;
-                log.Debug("Message received: " + request.Header + (request.Body.Length > 0 ? " / " + request.Body : ""));
-
-                if (request.Header == "VERSIONCHECK")
-                {
-                    ctx.Channel.WriteAndFlushAsync("#ENCRYPTION_OFF##");
-                    ctx.Channel.WriteAndFlushAsync("#SECRET_KEY\r1337##");
-                }
+                MessageHandler.Instance().ProcessRequest(player, request);
             }
 
             base.ChannelRead(ctx, msg);

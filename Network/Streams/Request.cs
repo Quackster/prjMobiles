@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Squirtle.Network.Streams
 {
-    class Request
+    public class Request
     {
         private string messageHeader;
         private string messageData;

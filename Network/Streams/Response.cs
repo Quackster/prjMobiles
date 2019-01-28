@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Squirtle.Network.Streams
 {
-    class Response
+    public class Response
     {
         private string _header;
         private bool _finalised;

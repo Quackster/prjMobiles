@@ -4,6 +4,7 @@ using System.Text;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
+using Squirtle.Network.Streams;
 
 namespace Squirtle.Network.Codec
 {
@@ -22,6 +23,12 @@ namespace Squirtle.Network.Codec
                 if (message is string)
                 {
                     context.WriteAndFlushAsync(Unpooled.CopiedBuffer(Encoding.GetEncoding(0).GetBytes((string)message)));
+                }
+
+                if (message is Response)
+                {
+                    Response response = (Response)message;
+                    context.WriteAndFlushAsync(Unpooled.CopiedBuffer(Encoding.GetEncoding(0).GetBytes(response.GetMessage())));
                 }
             }
             catch (Exception ex)
