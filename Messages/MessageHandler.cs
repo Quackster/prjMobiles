@@ -27,10 +27,17 @@ namespace Squirtle.Messages
         /// <param name="request">the request sent by client</param>
         public void ProcessRequest(Player player, Request request)
         {
-            if (_messages.ContainsKey(request.Header))
-                _messages[request.Header].Handle(player, request);
+            try
+            {
+                log.Debug("Message received: " + request.Header + (request.Body.Length > 0 ? " / " + request.Body : ""));
 
-            log.Debug("Message received: " + request.Header + (request.Body.Length > 0 ? " / " + request.Body : ""));
+                if (_messages.ContainsKey(request.Header))
+                    _messages[request.Header].Handle(player, request);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
         }
 
         /// <summary>
