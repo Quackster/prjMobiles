@@ -1,4 +1,5 @@
 ﻿using log4net;
+
 using Squirtle.Game.Players;
 using Squirtle.Network.Streams;
 using System;
@@ -9,7 +10,7 @@ namespace Squirtle.Messages
 {
     class MessageHandler
     {
-        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog _log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private static MessageHandler _messageHandler;
         private Dictionary<string, IMessage> _messages;
@@ -29,14 +30,14 @@ namespace Squirtle.Messages
         {
             try
             {
-                log.Debug(string.Format("Message received: {0} {1}", request.Header, request.Body));
+                _log.Debug(string.Format("Message received: {0} {1}", request.Header, request.Body));
 
                 if (_messages.ContainsKey(request.Header))
                     _messages[request.Header].Handle(player, request);
             }
             catch (Exception ex)
             {
-                log.Error(ex);
+                _log.Error(ex);
             }
         }
 

@@ -43,10 +43,7 @@ namespace Squirtle.Network.Streams
         public Response(string Header)
         {
             _header = Header;
-
             _buffer = new StringBuilder();
-            _buffer.Append("#");
-            _buffer.Append(_header);
         }
 
         /// <summary>
@@ -70,11 +67,9 @@ namespace Squirtle.Network.Streams
             if (!_finalised)
             {
                 _finalised = true;
-                _buffer.Append("#");
-                _buffer.Append("#");
             }
 
-            return _buffer.ToString();
+            return string.Format("#{0}{1}##", _header, _buffer.ToString());
         }
     }
 }
