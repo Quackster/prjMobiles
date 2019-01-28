@@ -13,11 +13,18 @@ namespace Squirtle
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        /// <summary>
+        /// Get the logger instance.
+        /// </summary>
         public static ILog Logger
         {
             get { return log; }
         }
 
+        /// <summary>
+        /// Main entry point for program
+        /// </summary>
+        /// <param name="args">the arguments specified when calling this program</param>
         static void Main(string[] args)
         {
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
