@@ -27,6 +27,7 @@ namespace Squirtle.Network
             else
             {
                 messageHeader = messageBody;
+                messageBody = string.Empty;
             }
 
             output.Add(new Request(messageHeader, messageBody));

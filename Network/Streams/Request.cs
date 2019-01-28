@@ -56,7 +56,7 @@ namespace Squirtle.Network.Streams
         {
             var delimetered = _data.Split(delimeter);
 
-            if (delimetered.Length >= index)
+            if (delimetered.Length > index)
                 return delimetered[index];
 
             return null;
