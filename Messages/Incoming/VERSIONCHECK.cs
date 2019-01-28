@@ -1,5 +1,6 @@
 ﻿using Squirtle.Game.Players;
 using Squirtle.Network.Streams;
+using System;
 
 namespace Squirtle.Messages
 {
@@ -7,8 +8,11 @@ namespace Squirtle.Messages
     {
         public void Handle(Player player, Request request)
         {
-            player.Send(new Response("ENCRYPTION_OFF"));
-            player.Send(new Response("SECRET_KEY\r1337"));
+            if (request.GetArgument(0) == "client002" || request.GetArgument(0) == "client003")
+            {
+                player.Send(new Response("ENCRYPTION_OFF"));
+                player.Send(new Response("SECRET_KEY\r1337"));
+            }
         }
     }
 }

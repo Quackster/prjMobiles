@@ -18,7 +18,7 @@ namespace Squirtle.Network.Streams
         {
             get { return _header; }
         }
-        
+
         /// <summary>
         /// Get the message buffer
         /// </summary>
@@ -56,6 +56,71 @@ namespace Squirtle.Network.Streams
             value = value.Replace("#", "*");
 
             _buffer.Append(value);
+        }
+
+        /// <summary>
+        /// Append an argument with the default delimeter.
+        /// </summary>
+        /// <param name="arg">the argument to append</param>
+        public void AppendArgument(string arg) =>
+            AppendArgument(arg, ' ');
+
+        /// <summary>
+        /// Append an argument with the breakline delimeter.
+        /// </summary>
+        /// <param name="arg">the argument to append</param>
+        public void AppendNewArgument(string arg) =>
+            AppendArgument(arg, (char)13);
+
+        /// <summary>
+        /// Append an argument with the slash delimeter.
+        /// </summary>
+        /// <param name="arg">the argument to append</param>
+        public void AppendPartArgument(string arg) =>
+            AppendArgument(arg, '/');
+
+        /// <summary>
+        /// Append an argument with the tab delimeter.
+        /// </summary>
+        /// <param name="arg">the argument to append</param>
+        public void AppendTabArgument(string arg) =>
+            AppendArgument(arg, (char)9);
+
+        /// <summary>
+        /// Append a key value argument with the equals sign.
+        /// </summary>
+        /// <param name="key">the key</param>
+        /// <param name="value">the value</param>
+        public void AppendKVArgument(string key, string value)
+        {
+            this.Append((char)13);
+            this.Append(key);
+            this.Append('=');
+            this.Append(value);
+        }
+
+        /// <summary>
+        /// Append a key value argument with the colon sign.
+        /// </summary>
+        /// <param name="key">the key</param>
+        /// <param name="value">the value</param>
+        public void AppendKV2Argument(string key, string value)
+        {
+            this.Append((char)13);
+            this.Append(key);
+            this.Append(':');
+            this.Append(value);
+        }
+
+        /// <summary>
+        /// Append argument by custom delimeter
+        /// </summary>
+        /// <param name="arg">the argument</param>
+        /// <param name="delimiter">the delimeter</param>
+        public void AppendArgument(string arg, char delimiter)
+        {
+            this.Append(delimiter);
+            this.Append(arg);
         }
 
         /// <summary>

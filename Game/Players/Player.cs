@@ -14,7 +14,7 @@ namespace Squirtle.Game.Players
         private IChannel _channel;
 
         /// <summary>
-        /// Gets the player channel
+        /// Gets the player channel.
         /// </summary>
         public IChannel Channel
         {
@@ -22,7 +22,15 @@ namespace Squirtle.Game.Players
         }
 
         /// <summary>
-        /// Constructor for player
+        /// Get the ip address of the player connected.
+        /// </summary>
+        public string IpAddress
+        {
+            get { return _channel.RemoteAddress.ToString().Split(':')[3].Replace("]", ""); }
+        }
+
+        /// <summary>
+        /// Constructor for player.
         /// </summary>
         /// <param name="channel">the channel</param>
         public Player(IChannel channel)
@@ -31,7 +39,7 @@ namespace Squirtle.Game.Players
         }
 
         /// <summary>
-        /// Send an object to the player's channel
+        /// Send an object to the player's channel.
         /// </summary>
         /// <param name="obj">the object to send</param>
         public void Send(object obj)

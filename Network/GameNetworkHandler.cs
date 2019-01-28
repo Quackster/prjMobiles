@@ -22,10 +22,15 @@ namespace Squirtle.Network
         public override void ChannelActive(IChannelHandlerContext ctx)
         {
             base.ChannelActive(ctx);
-            ctx.Channel.GetAttribute<Player>(PLAYER_KEY).SetIfAbsent(new Player(ctx.Channel));
+            var player = new Player(ctx.Channel);
 
-            log.Debug($"Client connected to server: {ctx.Channel.RemoteAddress}");
-            ctx.Channel.WriteAndFlushAsync(new Response("HELLO"));
+            if (player != null)
+            {
+                log.Debug($"Client connected to server: {player.IpAddress}");
+
+                ctx.Channel.GetAttribute<Player>(PLAYER_KEY).SetIfAbsent(player);
+                ctx.Channel.WriteAndFlushAsync(new Response("HELLO"));
+            }
         }
 
         /// <summary>
@@ -41,7 +46,7 @@ namespace Squirtle.Network
             if (player == null)
                 return;
 
-            log.Debug($"Client disconnected from server: {ctx.Channel.RemoteAddress}");
+            log.Debug($"Client disconnected from server: {player.IpAddress}");
         }
 
         /// <summary>
