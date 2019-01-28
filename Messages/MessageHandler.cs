@@ -29,7 +29,7 @@ namespace Squirtle.Messages
         {
             try
             {
-                log.Debug("Message received: " + request.Header + (request.Body.Length > 0 ? " / " + request.Body : ""));
+                log.Debug(string.Format("Message received: {0} {1}", request.Header, request.Body));
 
                 if (_messages.ContainsKey(request.Header))
                     _messages[request.Header].Handle(player, request);
