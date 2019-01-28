@@ -22,7 +22,7 @@ namespace Squirtle.Storage
         /// Retrieves a MySQL connection
         /// </summary>
         /// <returns>returns the mysql connection</returns>
-        public MySqlConnection GetConnection(bool openConnection = true)
+        public IDbConnection GetConnection(bool openConnection = true)
         {
             MySqlConnectionStringBuilder connectionString = new MySqlConnectionStringBuilder();
             connectionString.Server = "localhost";
