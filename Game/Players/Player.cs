@@ -49,12 +49,8 @@ namespace Squirtle.Game.Players
 
             _channel.WriteAndFlushAsync(obj);
 
-            Response response = null;
-
-            if (obj is Response)
-                response = (Response)obj;
-
-            _log.Debug(string.Format("Sent: {0}{1}", response.Header, response.Body));
+            if (obj is Response response)
+                _log.Debug(string.Format("Sent: {0}{1}", response.Header, response.Body));
         }
     }
 }
