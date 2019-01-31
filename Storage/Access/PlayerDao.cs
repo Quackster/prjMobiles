@@ -20,8 +20,11 @@ namespace Squirtle.Storage.Access
         {
             using (var connection = Database.Instance().GetConnection())
             {
-                return connection.QueryFirstOrDefault<PlayerData>("SELECT * FROM users WHERE username = @username", new { username });
+                var playerData = connection.QueryFirstOrDefault<PlayerData>("SELECT * FROM users WHERE username = @username", new { username });
+
             }
+
+            return null;
         }
     }
 }

@@ -19,17 +19,6 @@ namespace Squirtle.Network
         private MultithreadEventLoopGroup workerGroup;
 
         /// <summary>
-        /// Invoke the singleton instance
-        /// </summary>
-        public static GameServer Instance()
-        {
-            if (gameServer == null)
-                gameServer = new GameServer();
-
-            return gameServer;
-        }
-
-        /// <summary>
         /// GameServer constructor
         /// </summary>
         public GameServer()
@@ -67,6 +56,17 @@ namespace Squirtle.Network
             {
                 log.Error($"Failed to setup network listener... {e}");
             }
+        }
+
+        /// <summary>
+        /// Invoke the singleton instance
+        /// </summary>
+        public static GameServer Instance()
+        {
+            if (gameServer == null)
+                gameServer = new GameServer();
+
+            return gameServer;
         }
     }
 }
