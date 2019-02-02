@@ -77,7 +77,12 @@ namespace Squirtle.Game.Room.Model
         /// <returns>true, if successful</returns>
         public bool IsValidPosition(Position Position)
         {
-            return (Position.X >= 0 && Position.Y >= 0 && Position.X < this.MapSizeX && Position.Y < this.MapSizeY);
+            if (Position.X >= 0 && Position.Y >= 0 && Position.X < this.MapSizeX && Position.Y < this.MapSizeY)
+            {
+                return TileStates[Position.X, Position.Y];
+            }
+
+            return false;
         }
     }
 }

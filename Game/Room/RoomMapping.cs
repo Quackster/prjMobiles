@@ -34,6 +34,12 @@ namespace Squirtle.Game.Room
             if (!_room.Model.IsValidPosition(tmp))
                 return false;
 
+            int oldHeight = _room.Model.TileHeights[position.X, position.Y];
+            int newHeight = _room.Model.TileHeights[tmp.X, tmp.Y];
+
+            if (Math.Abs(oldHeight - newHeight) > 1)
+                return false; // Can't go higher than 1 square
+
             return true;
         }
     }
