@@ -87,11 +87,11 @@ namespace Squirtle.Game.Room
         /// <param name="entity">leave room handler</param>
         public void LeaveRoom(IEntity entity)
         {
+            _entities.Remove(entity);
+
             var response = Response.Init("LOGOUT");
             response.AppendNewArgument(entity.Details.Username);
             this.Send(response);
-
-            _entities.Remove(entity);
         }
 
         /// <summary>
