@@ -89,7 +89,7 @@ namespace Squirtle.Game.Room.Task
                 {
                     entity.RoomUser.Position.X = entity.RoomUser.NextPosition.X;
                     entity.RoomUser.Position.Y = entity.RoomUser.NextPosition.Y;
-                    // TODO: Height
+                    entity.RoomUser.Position.Z = _room.Model.TileHeights[entity.RoomUser.Position.X, entity.RoomUser.Position.Y];
                 }
 
                 if (entity.RoomUser.PathList.Count > 0)
@@ -98,7 +98,7 @@ namespace Squirtle.Game.Room.Task
                     entity.RoomUser.PathList.Remove(next);
 
                     int rotation = Rotation.CalculateDirection(position.X, position.Y, next.X, next.Y);
-                    double height = 0;
+                    double height = _room.Model.TileHeights[next.X, next.Y];
 
                     if (entity.RoomUser.Status.ContainsKey("mv"))
                         entity.RoomUser.Status.Remove("mv");
