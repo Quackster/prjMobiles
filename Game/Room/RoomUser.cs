@@ -30,12 +30,18 @@ namespace Squirtle.Game.Room
         public Room Room { get { return RoomManager.Instance().GetRoom(this.RoomId); } }
 
         /// <summary>
+        /// Get the status handling,
+        /// </summary>
+        public Dictionary<String, String> Status { get; set; }
+
+        /// <summary>
         /// Constructor for room user.
         /// </summary>
         /// <param name="entity">the entity that goes into the room user</param>
         public RoomUser(IEntity entity)
         {
             this.Entity = entity;
+            this.Status = new Dictionary<String, String>();
         }
 
         /// <summary>
@@ -50,6 +56,31 @@ namespace Squirtle.Game.Room
             response.AppendArgument(this.Position.Y);
             response.AppendArgument(this.Position.Z);
             response.AppendArgument(this.Entity.Details.Mission);
+        }
+
+        /// <summary>
+        /// Append the status string to the response
+        /// </summary>
+        /// <param name="response">the response</param>
+        public void appendStatusString(Response response)
+        {
+            response.AppendNewArgument(this.Entity.Details.Username);
+            response.AppendArgument(string.Format("{0},{1},{2},{3},{4}/", this.Position.X, this.Position.Y, this.Position.Z, this.Position.HeadRotation, this.Position.BodyRotation));
+
+            foreach (var kvp in Status)
+            {
+                response.Append(kvp.Key);
+
+                if (kvp.Value.Length > 0)
+                {
+                    response.Append(" ");
+                    response.Append(kvp.Value);
+                }
+
+                response.Append("/");
+            }
+
+            response.Append((char)13);
         }
     }
 }

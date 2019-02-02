@@ -38,25 +38,38 @@ namespace Squirtle.Game.Room
         public void enterRoom(IEntity entity)
         {
             entity.RoomUser.RoomId = _roomData.Id;
-            entity.RoomUser.Position = new Position(_roomData.StartX, _roomData.StartY, _roomData.StartZ, _roomData.StartRotation);
-            _entities.Add(entity);
+            entity.RoomUser.Position = new Position(_roomData.StartX, _roomData.StartY, _roomData.StartZ, 4);
 
             if (entity is Player player)
             {
                 player.Send(new Response("HEIGHTMAP " + _roomData.Heightmap.Replace("|", "\r")));
                 player.Send(new Response("OBJECTS " + _roomData.ModelType + _roomData.Objects));
 
-                var users = Response.Init("USERS");
+                if (_entities.Count > 0)
+                {
+                    var users = Response.Init("USERS");
+                    var statuses = Response.Init("STATUS");
 
-                foreach (var entityUser in _entities)
-                    entityUser.RoomUser.appendUserString(users);
+                    foreach (var entityUser in _entities)
+                    {
+                        entityUser.RoomUser.appendUserString(users);
+                        entityUser.RoomUser.appendStatusString(users);
+                    }
 
-                player.Send(users);
+                    player.Send(users);
+                    player.Send(statuses);
+                }
+
+                _entities.Add(entity);
 
                 var newUser = Response.Init("USERS");
                 entity.RoomUser.appendUserString(newUser);
                 this.Send(newUser);
-            }            
+
+                var newStatus = Response.Init("STATUS");
+                entity.RoomUser.appendStatusString(newStatus);
+                this.Send(newStatus);
+            }
         }
 
         /// <summary>
