@@ -1,6 +1,7 @@
 ﻿using DotNetty.Transport.Channels;
 using log4net;
 using Squirtle.Game.Entity;
+using Squirtle.Game.Room;
 using Squirtle.Network.Streams;
 
 namespace Squirtle.Game.Players
@@ -8,8 +9,10 @@ namespace Squirtle.Game.Players
     public class Player : IEntity
     {
         private static readonly ILog _log = LogManager.GetLogger(typeof(Player));
+
         private IChannel _channel;
         private EntityData _playerDetails;
+        private RoomUser _roomUser;
 
         /// <summary>
         /// Gets the player channel.
@@ -36,6 +39,14 @@ namespace Squirtle.Game.Players
         }
 
         /// <summary>
+        /// Gets the room user.
+        /// </summary>
+        public override RoomUser RoomUser
+        {
+            get { return _roomUser; }
+        }
+
+        /// <summary>
         /// Constructor for player.
         /// </summary>
         /// <param name="channel">the channel</param>
@@ -52,6 +63,7 @@ namespace Squirtle.Game.Players
         public void login(EntityData playerDetails, bool enterRoom)
         {
             _playerDetails = playerDetails;
+            _roomUser = new RoomUser(this);
 
             if (!enterRoom)
             {
@@ -67,6 +79,13 @@ namespace Squirtle.Game.Players
                 response.AppendArgument(playerDetails.Age);
                 response.AppendArgument(playerDetails.Mission);
                 this.Send(response);
+            }
+            else
+            {
+                var room = RoomManager.Instance().GetRoom(1);
+
+                if (room != null)
+                    room.enterRoom(this);
             }
         }
 

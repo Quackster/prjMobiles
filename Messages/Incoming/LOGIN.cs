@@ -19,7 +19,7 @@ namespace Squirtle.Messages
                 return;
             }
 
-            player.login(playerData, false);
+            player.login(playerData, true);
         }
     }
 }

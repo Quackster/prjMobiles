@@ -1,6 +1,7 @@
 ﻿using log4net;
 using log4net.Config;
 using Squirtle.Game.Players;
+using Squirtle.Game.Room;
 using Squirtle.Messages;
 using Squirtle.Network;
 using Squirtle.Storage;
@@ -54,6 +55,7 @@ namespace Squirtle
             }
 
             PlayerManager.Instance();
+            RoomManager.Instance();
             MessageHandler.Instance();
 
             GameServer.Instance().InitialiseServer(91);
