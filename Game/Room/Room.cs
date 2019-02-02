@@ -38,7 +38,7 @@ namespace Squirtle.Game.Room
         public void enterRoom(IEntity entity)
         {
             entity.RoomUser.RoomId = _roomData.Id;
-            entity.RoomUser.Position = new Position(_roomData.StartX, _roomData.StartY, _roomData.StartZ, 4);
+            entity.RoomUser.Position = new Position(_roomData.StartX, _roomData.StartY, _roomData.StartZ, _roomData.StartRotation);
 
             if (entity is Player player)
             {
