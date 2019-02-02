@@ -46,13 +46,30 @@ namespace Squirtle.Game.Room
                 player.Send(new Response("HEIGHTMAP " + _roomData.Heightmap.Replace("|", "\r")));
                 player.Send(new Response("OBJECTS " + _roomData.ModelType + _roomData.Objects));
 
-                var response = Response.Init("USERS");
+                var users = Response.Init("USERS");
 
                 foreach (var entityUser in _entities)
-                    entityUser.RoomUser.appendUserString(response);
+                    entityUser.RoomUser.appendUserString(users);
 
-                player.Send(response);
+                player.Send(users);
+
+                var newUser = Response.Init("USERS");
+                entity.RoomUser.appendUserString(newUser);
+                this.Send(newUser);
             }            
+        }
+
+        /// <summary>
+        /// Send a packet to all users in the room.
+        /// </summary>
+        /// <param name="newUser"></param>
+        private void Send(Response response)
+        {
+            foreach (var entity in _entities)
+            {
+                if (entity is Player player)
+                    player.Send(response);
+            }
         }
     }
 }
