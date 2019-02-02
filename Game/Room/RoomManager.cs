@@ -1,4 +1,5 @@
-﻿using Squirtle.Storage.Access;
+﻿using Squirtle.Game.Room.Model;
+using Squirtle.Storage.Access;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,9 @@ namespace Squirtle.Game.Room
     class RoomManager
     {
         private static RoomManager _roomManager;
-        private List<Room> _rooms;
+
+        private List<RoomInstance> _rooms;
+        private Dictionary<int, RoomModel> _roomModels;
 
         /// <summary>
         /// Room manager constructor
@@ -16,6 +19,10 @@ namespace Squirtle.Game.Room
         public RoomManager()
         {
             _rooms = RoomDao.GetRooms();
+            _roomModels = RoomDao.GetModels();
+
+            foreach (var kvp in _roomModels)
+                kvp.Value.ParseMap();
         }
 
         /// <summary>
@@ -23,13 +30,26 @@ namespace Squirtle.Game.Room
         /// </summary>
         /// <param name="roomId">the room id</param>
         /// <returns>the room instance</returns>
-        public Room GetRoom(int roomId)
+        public RoomInstance GetRoom(int roomId)
         {
             foreach (var room in _rooms)
             {
                 if (room.Data.Id == roomId)
                     return room;
             }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Get the room model by id
+        /// </summary>
+        /// <param name="typeId">the type id</param>
+        /// <returns>the room model instance</returns>
+        public RoomModel GetModel(int typeId)
+        {
+            if (_roomModels.ContainsKey(typeId))
+                return _roomModels[typeId];
 
             return null;
         }

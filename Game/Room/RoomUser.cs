@@ -1,5 +1,6 @@
 ﻿using Squirtle.Game.Entity;
 using Squirtle.Game.Pathfinder;
+using Squirtle.Game.Room.Model;
 using Squirtle.Network.Streams;
 using System;
 using System.Collections.Generic;
@@ -25,14 +26,39 @@ namespace Squirtle.Game.Room
         public Position Position { get; set; }
 
         /// <summary>
+        /// Get the goal position of this room user.
+        /// </summary>
+        public Position Goal { get; set; }
+
+        /// <summary>
         /// Get the room instance the user is currently in.
         /// </summary>
-        public Room Room { get { return RoomManager.Instance().GetRoom(this.RoomId); } }
+        public RoomInstance Room { get { return RoomManager.Instance().GetRoom(this.RoomId); } }
 
         /// <summary>
         /// Get the status handling,
         /// </summary>
         public Dictionary<String, String> Status { get; set; }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        public bool NeedsUpdate { get; set; }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        public bool IsWalking { get; set; }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        public Position NextPosition { get; set; }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        public List<Position> PathList { get; set; }
 
         /// <summary>
         /// Constructor for room user.
@@ -42,6 +68,44 @@ namespace Squirtle.Game.Room
         {
             this.Entity = entity;
             this.Status = new Dictionary<String, String>();
+        }
+
+        /// <summary>
+        /// Request move handler
+        /// </summary>
+        /// <param name="x">x coord goal</param>
+        /// <param name="y">y coord goal</param>
+        public void Move(int x, int y)
+        {
+            if (this.Room == null)
+                return;
+
+            if (this.NextPosition != null)
+            {
+                var oldPosition = this.NextPosition.Copy();
+
+                this.Position.X = oldPosition.X;
+                this.Position.Y = oldPosition.Y;
+                // TODO: Height
+            }
+
+            this.Goal = new Position(x, y);
+
+            if (!RoomTile.IsValidTile(this.Room, this.Goal))
+                return;
+
+            var pathList = Pathfinder.Pathfinder.FindPath(this.Room, this.Position, this.Goal);
+
+            if (pathList == null)
+                return;
+
+            if (pathList.Count > 0)
+            {
+                this.PathList = pathList;
+                this.IsWalking = true;
+
+                Console.WriteLine("fOUND PATH");
+            }
         }
 
         /// <summary>

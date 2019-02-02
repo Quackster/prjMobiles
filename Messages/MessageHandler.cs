@@ -20,6 +20,7 @@ namespace Squirtle.Messages
             _messages = new Dictionary<string, IMessage>();
             _messages.Add("LOGIN", new LOGIN());
             _messages.Add("STATUSOK", new STATUSOK());
+            _messages.Add("Move", new Move());
         }
 
         /// <summary>
