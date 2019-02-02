@@ -12,7 +12,12 @@ namespace Squirtle.Messages
             var playerData = PlayerDao.TryLogin(request.GetArgument(0), request.GetArgument(1));
 
             if (playerData == null)
+            {
+                var response = new Response("ERROR");
+                response.AppendArgument("login in");
+                player.Send(response);
                 return;
+            }
 
             player.login(playerData, false);
         }

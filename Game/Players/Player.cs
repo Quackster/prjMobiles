@@ -5,7 +5,7 @@ using Squirtle.Network.Streams;
 
 namespace Squirtle.Game.Players
 {
-    public class Player
+    public class Player : IEntity
     {
         private static readonly ILog _log = LogManager.GetLogger(typeof(Player));
         private IChannel _channel;
@@ -30,7 +30,7 @@ namespace Squirtle.Game.Players
         /// <summary>
         /// Gets the player data.
         /// </summary>
-        public EntityData Details
+        public override EntityData Details
         {
             get { return _playerDetails; }
         }
