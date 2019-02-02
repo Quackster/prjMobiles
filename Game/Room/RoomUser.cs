@@ -83,10 +83,10 @@ namespace Squirtle.Game.Room
             if (this.NextPosition != null)
             {
                 var oldPosition = this.NextPosition.Copy();
-
                 this.Position.X = oldPosition.X;
                 this.Position.Y = oldPosition.Y;
-                // TODO: Height
+                this.Position.Z = this.Room.Model.TileHeights[oldPosition.X, oldPosition.Y];
+                this.NeedsUpdate = true;
             }
 
             this.Goal = new Position(x, y);
@@ -111,11 +111,6 @@ namespace Squirtle.Game.Room
         /// </summary>
         internal void StopWalking()
         {
-            /*        this.path.clear();
-        this.isWalking = false;
-        this.needsUpdate = true;
-        this.nextPosition = null;
-        this.removeStatus(StatusType.MOVE);*/
             this.PathList.Clear();
             this.IsWalking = false;
             this.NeedsUpdate = true;
