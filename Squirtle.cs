@@ -32,10 +32,10 @@ namespace Squirtle
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
-            Console.Title = "prjSquirtle - Habbo Hotel Emulation";
+            Console.Title = "prjSquirtle - Mobiles Disco Emulation";
 
             log.Info("Booting prjSquirtle - Written by Quackster");
-            log.Info("Habbo Hotel 2001 emulation of V1");
+            log.Info("Emulation of Mobiles Disco created in 1999");
 
             Exception exception = null;
             log.Info("Attempting to connect to MySQL database");
@@ -56,7 +56,7 @@ namespace Squirtle
             PlayerManager.Instance();
             MessageHandler.Instance();
 
-            GameServer.Instance().InitialiseServer(37120);
+            GameServer.Instance().InitialiseServer(91);
             Console.Read();
         }
     }

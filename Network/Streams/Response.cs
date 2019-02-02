@@ -80,28 +80,28 @@ namespace Squirtle.Network.Streams
         /// Append an argument with the default delimeter.
         /// </summary>
         /// <param name="arg">the argument to append</param>
-        public void AppendArgument(string arg) =>
+        public void AppendArgument(object arg) =>
             AppendArgument(arg, ' ');
 
         /// <summary>
         /// Append an argument with the breakline delimeter.
         /// </summary>
         /// <param name="arg">the argument to append</param>
-        public void AppendNewArgument(string arg) =>
+        public void AppendNewArgument(object arg) =>
             AppendArgument(arg, (char)13);
 
         /// <summary>
         /// Append an argument with the slash delimeter.
         /// </summary>
         /// <param name="arg">the argument to append</param>
-        public void AppendPartArgument(string arg) =>
+        public void AppendPartArgument(object arg) =>
             AppendArgument(arg, '/');
 
         /// <summary>
         /// Append an argument with the tab delimeter.
         /// </summary>
         /// <param name="arg">the argument to append</param>
-        public void AppendTabArgument(string arg) =>
+        public void AppendTabArgument(object arg) =>
             AppendArgument(arg, (char)9);
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Squirtle.Network.Streams
         /// </summary>
         /// <param name="key">the key</param>
         /// <param name="value">the value</param>
-        public void AppendKVArgument(string key, string value)
+        public void AppendKVArgument(object key, object value)
         {
             this.Append((char)13);
             this.Append(key);
@@ -135,7 +135,7 @@ namespace Squirtle.Network.Streams
         /// </summary>
         /// <param name="arg">the argument</param>
         /// <param name="delimiter">the delimeter</param>
-        public void AppendArgument(string arg, char delimiter)
+        public void AppendArgument(object arg, char delimiter)
         {
             this.Append(delimiter);
             this.Append(arg);

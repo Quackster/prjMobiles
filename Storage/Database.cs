@@ -28,7 +28,7 @@ namespace Squirtle.Storage
             connectionString.Server = "localhost";
             connectionString.UserID = "root";
             connectionString.Password = "123";
-            connectionString.Database = "roseau";
+            connectionString.Database = "squirtle";
 
             var dbConnection = new MySqlConnection(connectionString.ToString());
 

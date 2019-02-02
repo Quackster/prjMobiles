@@ -9,10 +9,12 @@ namespace Squirtle.Messages
     {
         public void Handle(Player player, Request request)
         {
-            if (PlayerDao.TryLogin(request.GetArgument(0), request.GetArgument(1)) == null)
-            {
-                Console.WriteLine("PlayerDao.TryLogin - Invalid");
-            }
+            var playerData = PlayerDao.TryLogin(request.GetArgument(0), request.GetArgument(1));
+
+            if (playerData == null)
+                return;
+
+            player.login(playerData, false);
         }
     }
 }
