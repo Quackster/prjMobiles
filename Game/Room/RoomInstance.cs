@@ -62,6 +62,11 @@ namespace Squirtle.Game.Room
         }
 
         /// <summary>
+        /// Get the list of entities in the room
+        /// </summary>
+        public List<IEntity> Entities { get { return _entities; } }
+
+        /// <summary>
         /// Constructor for this room
         /// </summary>
         /// <param name="roomData">the room data</param>
@@ -181,7 +186,7 @@ ambient1 fade 255 255 255 9000 - Sets the amount of color to remove from red, gr
         /// Send a packet to all users in the room.
         /// </summary>
         /// <param name="newUser"></param>
-        private void Send(Response response)
+        public void Send(Response response)
         {
             foreach (var player in Players)
             {

@@ -103,9 +103,24 @@ namespace Squirtle.Game.Room
             {
                 this.PathList = pathList;
                 this.IsWalking = true;
-
-                Console.WriteLine("fOUND PATH");
             }
+        }
+
+        /// <summary>
+        /// Stopped walking handler
+        /// </summary>
+        internal void StopWalking()
+        {
+            /*        this.path.clear();
+        this.isWalking = false;
+        this.needsUpdate = true;
+        this.nextPosition = null;
+        this.removeStatus(StatusType.MOVE);*/
+            this.PathList.Clear();
+            this.IsWalking = false;
+            this.NeedsUpdate = true;
+            this.NextPosition = null;
+            this.Status.Remove("mv");
         }
 
         /// <summary>

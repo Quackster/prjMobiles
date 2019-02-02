@@ -28,10 +28,10 @@ namespace Squirtle.Game.Room
         /// <returns></returns>
         public bool IsValidStep(Position position, Position tmp, bool isFinalMove)
         {
-            if (_room.Model.IsValidPosition(position))
+            if (!_room.Model.IsValidPosition(position))
                 return false;
 
-            if (_room.Model.IsValidPosition(tmp))
+            if (!_room.Model.IsValidPosition(tmp))
                 return false;
 
             return true;
