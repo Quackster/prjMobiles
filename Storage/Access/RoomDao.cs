@@ -24,5 +24,20 @@ namespace Squirtle.Storage.Access
 
             return rooms;
         }
+
+        /// <summary>
+        /// Get the room model data from the database
+        /// </summary>
+        /// <returns>the list of rooms</returns>
+        public static RoomModel GetModel(int modelType)
+        {
+            using (var connection = Database.Instance().GetConnection())
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@modelType", modelType);
+
+                return connection.QueryFirstOrDefault<RoomModel>("SELECT * FROM rooms_models WHERE model_id = @modelType", queryParameters);
+            }
+        }
     }
 }

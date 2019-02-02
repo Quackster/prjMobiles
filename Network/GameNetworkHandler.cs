@@ -46,6 +46,8 @@ namespace Squirtle.Network
             if (player == null)
                 return;
 
+            player.Disconnect();
+
             log.Debug($"Client disconnected from server: {player.IpAddress}");
         }
 

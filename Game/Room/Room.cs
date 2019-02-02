@@ -2,6 +2,7 @@
 using Squirtle.Game.Pathfinder;
 using Squirtle.Game.Players;
 using Squirtle.Network.Streams;
+using Squirtle.Storage.Access;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,15 +36,23 @@ namespace Squirtle.Game.Room
         /// Handler for entering room.
         /// </summary>
         /// <param name="entity">the entity to login</param>
-        public void enterRoom(IEntity entity)
+        public void EnterRoom(IEntity entity)
         {
+            if (entity.RoomUser.RoomId > 0)
+                entity.RoomUser.Room.LeaveRoom(entity);
+
+            var roomModel = RoomDao.GetModel(_roomData.ModelType);
+
+            if (roomModel == null)
+                return;
+
             entity.RoomUser.RoomId = _roomData.Id;
-            entity.RoomUser.Position = new Position(_roomData.StartX, _roomData.StartY, _roomData.StartZ, _roomData.StartRotation);
+            entity.RoomUser.Position = new Position(roomModel.StartX, roomModel.StartY, roomModel.StartZ, roomModel.StartRotation);
 
             if (entity is Player player)
             {
-                player.Send(new Response("HEIGHTMAP " + _roomData.Heightmap.Replace("|", "\r")));
-                player.Send(new Response("OBJECTS " + _roomData.ModelType + _roomData.Objects));
+                player.Send(new Response("HEIGHTMAP " + roomModel.Heightmap.Replace("|", "\r")));
+                player.Send(new Response("OBJECTS " + _roomData.ModelType + roomModel.Objects));
 
                 if (_entities.Count > 0)
                 {
@@ -52,8 +61,8 @@ namespace Squirtle.Game.Room
 
                     foreach (var entityUser in _entities)
                     {
-                        entityUser.RoomUser.appendUserString(users);
-                        entityUser.RoomUser.appendStatusString(users);
+                        entityUser.RoomUser.AppendUserString(users);
+                        entityUser.RoomUser.AppendStatusString(users);
                     }
 
                     player.Send(users);
@@ -63,13 +72,26 @@ namespace Squirtle.Game.Room
                 _entities.Add(entity);
 
                 var newUser = Response.Init("USERS");
-                entity.RoomUser.appendUserString(newUser);
+                entity.RoomUser.AppendUserString(newUser);
                 this.Send(newUser);
 
                 var newStatus = Response.Init("STATUS");
-                entity.RoomUser.appendStatusString(newStatus);
+                entity.RoomUser.AppendStatusString(newStatus);
                 this.Send(newStatus);
             }
+        }
+
+        /// <summary>
+        /// Handler for leaving room
+        /// </summary>
+        /// <param name="entity">leave room handler</param>
+        public void LeaveRoom(IEntity entity)
+        {
+            var response = Response.Init("LOGOUT");
+            response.AppendNewArgument(entity.Details.Username);
+            this.Send(response);
+
+            _entities.Remove(entity);
         }
 
         /// <summary>

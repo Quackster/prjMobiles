@@ -48,7 +48,7 @@ namespace Squirtle.Game.Room
         /// Append the room user details to the response
         /// </summary>
         /// <param name="response">the response</param>
-        public void appendUserString(Response response)
+        public void AppendUserString(Response response)
         {
             response.AppendNewArgument(this.Entity.Details.Username);
             response.AppendArgument(string.Format("{0},{1},{2}", this.Entity.Details.Pants, this.Entity.Details.Shirt, this.Entity.Details.Head));
@@ -62,7 +62,7 @@ namespace Squirtle.Game.Room
         /// Append the status string to the response
         /// </summary>
         /// <param name="response">the response</param>
-        public void appendStatusString(Response response)
+        public void AppendStatusString(Response response)
         {
             response.AppendNewArgument(this.Entity.Details.Username);
             response.AppendArgument(string.Format("{0},{1},{2},{3},{4}/", this.Position.X, this.Position.Y, this.Position.Z, this.Position.HeadRotation, this.Position.BodyRotation));

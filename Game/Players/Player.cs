@@ -1,4 +1,5 @@
-﻿using DotNetty.Transport.Channels;
+﻿using System;
+using DotNetty.Transport.Channels;
 using log4net;
 using Squirtle.Game.Entity;
 using Squirtle.Game.Room;
@@ -85,8 +86,19 @@ namespace Squirtle.Game.Players
                 var room = RoomManager.Instance().GetRoom(1);
 
                 if (room != null)
-                    room.enterRoom(this);
+                    room.EnterRoom(this);
             }
+        }
+
+        /// <summary>
+        /// Disconnection handler
+        /// </summary>
+        public void Disconnect()
+        {
+            var room = _roomUser.Room;
+
+            if (room != null)
+                room.LeaveRoom(this);
         }
 
         /// <summary>
