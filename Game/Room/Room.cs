@@ -51,8 +51,8 @@ namespace Squirtle.Game.Room
 
             if (entity is Player player)
             {
-                player.Send(new Response("HEIGHTMAP " + roomModel.Heightmap.Replace("|", "\r")));
-                player.Send(new Response("OBJECTS " + _roomData.ModelType + roomModel.Objects));
+                player.Send(new Response("HEIGHTMAP" + (char)13 + roomModel.Heightmap.Replace("|", "\r")));
+                player.Send(new Response("OBJECTS " + _roomData.ModelType + (char)13 + roomModel.Objects));
 
                 if (_entities.Count > 0)
                 {
