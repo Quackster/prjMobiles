@@ -2,6 +2,7 @@
 using Squirtle.Game.Bots;
 using Squirtle.Game.Entity;
 using Squirtle.Game.Pathfinder;
+using Squirtle.Game.Players;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -44,6 +45,7 @@ namespace Squirtle.Game.Room.Task
             _walkingPositions.Add(new Position(10, 2));
             _walkingPositions.Add(new Position(9, 2));
             _walkingPositions.Add(new Position(8, 2));
+
             _walkingPositions.Add(new Position(10, 1));
             _walkingPositions.Add(new Position(11, 1));
             _walkingPositions.Add(new Position(12, 1));
@@ -107,16 +109,76 @@ namespace Squirtle.Game.Room.Task
         /// <param name="state">the state</param>
         private void Run(object state)
         {
-            if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() > _walkingTimer)
+            var customer = this.FindCustomer();
+
+            if (customer != null)
             {
-                _walkingTimer = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + _random.Next(3, 8);
+                if (IsFacingCustomer(customer))
+                {
+                    Console.WriteLine("test123");
 
-                Position targetPosition = _walkingPositions[_random.Next(0, this._walkingPositions.Count)];
+                    int direction = Rotation.CalculateDirection(_bot.RoomUser.Position.X, _bot.RoomUser.Position.Y, customer.RoomUser.Position.X, customer.RoomUser.Position.Y);
 
-                if (targetPosition != null)
-                    _bot.RoomUser.Move(targetPosition.X, targetPosition.Y);
+                    if (direction != _bot.RoomUser.Position.Rotation)
+                    {
+                        _bot.RoomUser.Position.Rotation = direction;
+                        _bot.RoomUser.NeedsUpdate = true;
+                    }
+                }
+                else
+                {
+                    if (_bot.RoomUser.Position.X != customer.RoomUser.Position.X || _bot.RoomUser.Position.Y != 2)
+                        _bot.RoomUser.Move(customer.RoomUser.Position.X, 2);
+                }
+            }
+            else
+            {
+                if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() > _walkingTimer)
+                {
+                    _walkingTimer = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + _random.Next(3, 8);
+
+                    Position targetPosition = _walkingPositions[_random.Next(0, this._walkingPositions.Count)];
+
+                    if (targetPosition != null)
+                        _bot.RoomUser.Move(targetPosition.X, targetPosition.Y);
+                }
             }
         }
 
+        public Player FindCustomer()
+        {
+            List<IEntity> copy;
+
+            lock (_room.Entities)
+                copy = new List<IEntity>(_room.Entities);
+
+            foreach (IEntity entity in copy)
+            {
+                // 18 4
+                //  4 4
+
+                if (entity is Player player)
+                {
+                    if ((player.RoomUser.Position.X >= 4 && player.RoomUser.Position.X <= 18) && (player.RoomUser.Position.Y == 4))
+                        return player;
+                }
+            }
+
+            return null;
+        }
+
+        public bool IsFacingCustomer(Player player)
+        {
+            if (player.RoomUser.Position.X >= 4 && player.RoomUser.Position.X <= 18 && (player.RoomUser.Position.Y == 4))
+            {
+                if ((_bot.RoomUser.Position.X == player.RoomUser.Position.X) && _bot.RoomUser.Position.Y == 2)
+                {
+                    Console.WriteLine("true123");
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
