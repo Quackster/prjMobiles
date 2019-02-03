@@ -11,6 +11,7 @@ namespace Squirtle.Game.Players
     {
         private static readonly ILog _log = LogManager.GetLogger(typeof(Player));
 
+        private bool disconnected;
         private IChannel _channel;
         private EntityData _playerDetails;
         private RoomUser _roomUser;
@@ -66,6 +67,25 @@ namespace Squirtle.Game.Players
             _playerDetails = playerDetails;
             _roomUser = new RoomUser(this);
 
+            Player existingUser = null;
+
+            foreach (Player player in PlayerManager.Instance().Players.Values)
+            {
+                if (player.Details.Username == _playerDetails.Username)
+                {
+                    existingUser = player;
+                    break;
+                }
+            }
+
+            if (existingUser != null)
+            {
+                existingUser.Channel.CloseAsync();
+                existingUser.Disconnect();
+            }
+
+            PlayerManager.Instance().Players.Add(_playerDetails.Username, this);
+
             if (!enterRoom)
             {
                 var response = Response.Init("USEROBJECT");
@@ -98,10 +118,17 @@ namespace Squirtle.Game.Players
             if (_roomUser == null)
                 return;
 
+            if (this.disconnected)
+                return;
+
+            PlayerManager.Instance().Players.Remove(_playerDetails.Username);
+
             var room = _roomUser.Room;
 
             if (room != null)
                 room.LeaveRoom(this);
+
+            this.disconnected = true;
         }
 
         /// <summary>

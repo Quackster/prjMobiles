@@ -24,6 +24,13 @@ namespace Squirtle.Messages
                 response = new Response("ERROR");
                 response.AppendArgument("Your password is too short!");
                 player.Send(response);
+                return;
+            }
+
+            if (username.ToLower() == "Maarit")
+            {
+                player.Channel.CloseAsync();
+                return;
             }
 
             int head = 1;
@@ -50,6 +57,7 @@ namespace Squirtle.Messages
                 response = new Response("ERROR");
                 response.AppendArgument("You are too old!");
                 player.Send(response);
+                return;
             }
 
             if (age <= 11)
@@ -57,6 +65,7 @@ namespace Squirtle.Messages
                 response = new Response("ERROR");
                 response.AppendArgument("You are too young!");
                 player.Send(response);
+                return;
             }
 
             string mission = string.Empty;

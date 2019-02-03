@@ -7,6 +7,17 @@ namespace Squirtle.Game.Players
     class PlayerManager
     {
         private static PlayerManager _playerManager;
+        private Dictionary<string, Player> _players;
+
+        public Dictionary<string, Player> Players { get { return _players; } }
+
+        /// <summary>
+        /// Player manager constructor
+        /// </summary>
+        public PlayerManager()
+        {
+            _players = new Dictionary<string, Player>();
+        }
 
         /// <summary>
         /// Invoke the singleton instance
