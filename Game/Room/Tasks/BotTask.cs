@@ -243,9 +243,18 @@ namespace Squirtle.Game.Room.Tasks
                 _bot.RoomUser.Status.Add("gived", "");
                 _bot.RoomUser.NeedsUpdate = true;
 
-                GiveDrinkPlayer = false;
+                Task.Delay(1000).ContinueWith(t => RemoveGiveDrink());
 
             }
+        }
+
+        private void RemoveGiveDrink()
+        {
+            _bot.RoomUser.Status.Remove("gived");
+            _bot.RoomUser.Status.Add("stand", "");
+            _bot.RoomUser.NeedsUpdate = true;
+
+            GiveDrinkPlayer = false;
         }
 
         /// <summary>
