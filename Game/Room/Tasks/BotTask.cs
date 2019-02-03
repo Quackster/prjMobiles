@@ -305,7 +305,7 @@ namespace Squirtle.Game.Room.Tasks
         /// <returns>true, if successful</returns>
         public bool IsFacingCustomer(Player player)
         {
-            if (player.RoomUser.Position.X >= 8 && player.RoomUser.Position.X <= 14 && (player.RoomUser.Position.Y == 4))
+            if (IsCustomerWaiting(player))
             {
                 if ((_bot.RoomUser.Position.X == player.RoomUser.Position.X) && _bot.RoomUser.Position.Y == 2)
                 {
