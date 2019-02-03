@@ -106,17 +106,6 @@ namespace Squirtle.Game.Room
             entity.RoomUser.RoomId = _roomData.Id;
             entity.RoomUser.Position = roomPosition;
 
-            /*if (entity.Details.Head == 9 && entity.Details.Shirt == 9 && entity.Details.Pants == 9)
-            {
-                //entity.RoomUser.Status.Add("stand", ""); // waiting
-                //entity.RoomUser.Status.Add("taked", ""); // go to fridge
-                entity.RoomUser.Position.X = 12;
-                entity.RoomUser.Position.Y = 2;
-                entity.RoomUser.Position.Rotation = 4;
-                entity.RoomUser.Position.Z = 0.3;
-                entity.RoomUser.Status.Add("gived", "");
-            }*/
-
             if (entity is Player player)
             {
                 player.Send(Response.Init("HEIGHTMAP" + (char)13 + roomModel.Heightmap.Replace("|", "\r")));
