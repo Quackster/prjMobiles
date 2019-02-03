@@ -116,7 +116,7 @@ namespace Squirtle.Game.Room.Tasks
         {
             if (_currentCustomer != null)
             {
-                if ((_currentCustomer.RoomUser.RoomId != _room.Data.Id) || !IsCustomerWaiting(_currentCustomer))
+                if ((_currentCustomer.RoomUser.RoomId != _room.Data.Id) || !IsCustomerWaiting(_currentCustomer) || _currentCustomer.RoomUser.Status.ContainsKey("carryd"))
                 {
                     FridgeDrinkGrab = false;
                     GiveDrinkPlayer = false;
@@ -254,6 +254,9 @@ namespace Squirtle.Game.Room.Tasks
             _bot.RoomUser.Status.Add("stand", "");
             _bot.RoomUser.NeedsUpdate = true;
 
+            _currentCustomer.RoomUser.Status.Add("carryd", "Coffee");
+            _currentCustomer.RoomUser.NeedsUpdate = true;
+
             GiveDrinkPlayer = false;
         }
 
@@ -272,6 +275,9 @@ namespace Squirtle.Game.Room.Tasks
             {
                 if (entity is Player player)
                 {
+                    if (entity.RoomUser.Status.ContainsKey("carryd"))
+                        continue;
+
                     if ((player.RoomUser.Position.X >= 8 && player.RoomUser.Position.X <= 14) && (player.RoomUser.Position.Y == 4))
                         return player;
                 }
