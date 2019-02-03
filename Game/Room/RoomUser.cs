@@ -122,12 +122,10 @@ namespace Squirtle.Game.Room
         /// <summary>
         /// Stopped walking handler
         /// </summary>
-        internal void StopWalking()
+        public void StopWalking()
         {
             if (!this.IsWalking)
-            {
                 return;
-            }
 
             this.IsWalking = false;
             this.PathList.Clear();
@@ -138,14 +136,14 @@ namespace Squirtle.Game.Room
             if (Room.Model.ModelType == 1)
             {
                 if (Position.X == 0 && Position.Y == 7)
-                    RoomManager.Instance().GetRoom(1).EnterRoom(this.Entity, new Position(15, 18, 0, 6));
+                    RoomManager.Instance().GetRoom(1).EnterRoom(this.Entity, new Position(15, 18, 0, 7, 6));
             }
 
 
             if (Room.Model.ModelType == 0)
             {
                 if (Position.X == 16 && Position.Y == 18)
-                    RoomManager.Instance().GetRoom(2).EnterRoom(this.Entity, new Position(1, 7, 0, 2));
+                    RoomManager.Instance().GetRoom(2).EnterRoom(this.Entity, new Position(1, 7, 0, 3, 2));
             }
 
         }

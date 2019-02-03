@@ -49,9 +49,13 @@
             this.HeadRotation = rotation;
         }
 
-        public Position(int x, int y, int z, int rotation, int bodyRotation) : this(x, y, z, rotation)
+        public Position(int x, int y, int z, int headRotation, int bodyRotation)
         {
-            BodyRotation = bodyRotation;
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+            this.BodyRotation = bodyRotation;
+            this.HeadRotation = headRotation;
         }
 
         // methods
