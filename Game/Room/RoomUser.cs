@@ -67,7 +67,20 @@ namespace Squirtle.Game.Room
         public RoomUser(IEntity entity)
         {
             this.Entity = entity;
+            this.Reset();
+        }
+        
+        /// <summary>
+        /// Reset details when moving between rooms
+        /// </summary>
+        public void Reset()
+        {
+            this.PathList = new List<Position>();
             this.Status = new Dictionary<String, String>();
+
+            this.IsWalking = false;
+            this.NextPosition = null;
+            this.RoomId = 0;
         }
 
         /// <summary>
@@ -111,8 +124,13 @@ namespace Squirtle.Game.Room
         /// </summary>
         internal void StopWalking()
         {
-            this.PathList.Clear();
+            if (!this.IsWalking)
+            {
+                return;
+            }
+
             this.IsWalking = false;
+            this.PathList.Clear();
             this.NeedsUpdate = true;
             this.NextPosition = null;
             this.Status.Remove("mv");
@@ -120,14 +138,14 @@ namespace Squirtle.Game.Room
             if (Room.Model.ModelType == 1)
             {
                 if (Position.X == 0 && Position.Y == 7)
-                    RoomManager.Instance().GetRoom(1).EnterRoom(this.Entity);
+                    RoomManager.Instance().GetRoom(1).EnterRoom(this.Entity, new Position(15, 18, 0, 6));
             }
 
 
             if (Room.Model.ModelType == 0)
             {
                 if (Position.X == 16 && Position.Y == 18)
-                    RoomManager.Instance().GetRoom(2).EnterRoom(this.Entity);
+                    RoomManager.Instance().GetRoom(2).EnterRoom(this.Entity, new Position(1, 7, 0, 2));
             }
 
         }

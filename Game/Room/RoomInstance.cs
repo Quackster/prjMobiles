@@ -82,20 +82,26 @@ namespace Squirtle.Game.Room
         /// Handler for entering room.
         /// </summary>
         /// <param name="entity">the entity to login</param>
-        public void EnterRoom(IEntity entity)
+        public void EnterRoom(IEntity entity, Position startPosition = null)
         {
-            if (entity.RoomUser.RoomId > 0)
-                entity.RoomUser.Room.LeaveRoom(entity);
+            Console.WriteLine("Enter room request: " + _roomData.Id);
 
             var roomModel = this.Model;
 
             if (roomModel == null)
                 return;
 
+            if (entity.RoomUser.RoomId > 0)
+                entity.RoomUser.Room.LeaveRoom(entity);
+
+            var roomPosition = startPosition ?? new Position(roomModel.StartX, roomModel.StartY, roomModel.StartZ, roomModel.StartRotation);
+            roomPosition.Z = this.Model.TileHeights[roomPosition.X, roomPosition.Y];
+
             Response response = null;
 
+            entity.RoomUser.Reset();
             entity.RoomUser.RoomId = _roomData.Id;
-            entity.RoomUser.Position = new Position(roomModel.StartX, roomModel.StartY, roomModel.StartZ, roomModel.StartRotation);
+            entity.RoomUser.Position = new Position(roomPosition.X, roomPosition.Y, roomPosition.Z, roomPosition.Rotation);
 
             if (entity is Player player)
             {

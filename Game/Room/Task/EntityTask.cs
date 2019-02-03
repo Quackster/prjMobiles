@@ -32,7 +32,7 @@ namespace Squirtle.Game.Room.Task
             if (this._timer != null)
                 return;
 
-            _timer = new Timer(new TimerCallback(Run), null, 500, 500);
+            _timer = new Timer(new TimerCallback(Run), null, 0, 500);
         }
 
         /// <summary>
@@ -65,6 +65,9 @@ namespace Squirtle.Game.Room.Task
 
                 foreach (IEntity entity in copy)
                 {
+                    if (entity.RoomUser.RoomId != _room.Data.Id)
+                        continue;
+
                     ProcessUser(entity);
 
                     if (entity.RoomUser.NeedsUpdate)
@@ -123,7 +126,8 @@ namespace Squirtle.Game.Room.Task
                     entity.RoomUser.Status.Add("mv", string.Format("{0},{1},{2}", next.X, next.Y, height));
                     entity.RoomUser.NextPosition = next;
 
-                } else
+                }
+                else
                 {
                     entity.RoomUser.StopWalking();
                 }
