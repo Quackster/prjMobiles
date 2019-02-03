@@ -154,15 +154,13 @@ namespace Squirtle.Game.Room.Task
             }
         }
 
-        public bool HandleCommand(Player from, string command)
+        public void HandleCommand(Player from, string command)
         {
             if (!IsFacingCustomer(from))
-                return false;
+                return;
 
             if (_currentCustomer != null && _currentCustomer != from)
-                return false;
-
-            return true;
+                return;
         }
 
         /// <summary>
