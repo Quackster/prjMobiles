@@ -20,16 +20,6 @@ namespace Squirtle.Game.Room.Model
             if (!room.Model.IsValidPosition(position))
                 return false;
 
-            Item item = room.Mapping.LocateItem(position.X, position.Y);
-
-            if (item != null)
-            {
-                if (item.ClassName == "chair")
-                    return true;
-                else
-                    return false;
-            }
-
             foreach (IEntity entity in room.Entities)
             {
                 if (entity.Details.Username == user.Details.Username)
@@ -42,6 +32,16 @@ namespace Squirtle.Game.Room.Model
                 {
                     return false;
                 }
+            }
+
+            Item item = room.Mapping.LocateItem(position.X, position.Y);
+
+            if (item != null)
+            {
+                if (item.ClassName == "chair")
+                    return true;
+                else
+                    return false;
             }
 
             return true;
