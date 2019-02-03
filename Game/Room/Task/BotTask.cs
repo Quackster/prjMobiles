@@ -141,8 +141,6 @@ namespace Squirtle.Game.Room.Task
                 }
                 else
                 {
-                    _currentCustomer = null;
-
                     if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() > _walkingTimer)
                     {
                         _walkingTimer = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + _random.Next(3, 8);
