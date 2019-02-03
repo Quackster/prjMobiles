@@ -110,7 +110,7 @@ namespace Squirtle.Game.Room
                     foreach (var entityUser in _entities)
                     {
                         entityUser.RoomUser.AppendUserString(users);
-                        entityUser.RoomUser.AppendStatusString(users);
+                        entityUser.RoomUser.AppendStatusString(statuses);
                     }
 
                     player.Send(users);

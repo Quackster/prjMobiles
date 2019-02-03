@@ -116,6 +116,20 @@ namespace Squirtle.Game.Room
             this.NeedsUpdate = true;
             this.NextPosition = null;
             this.Status.Remove("mv");
+
+            if (Room.Model.ModelType == 1)
+            {
+                if (Position.X == 0 && Position.Y == 7)
+                    RoomManager.Instance().GetRoom(1).EnterRoom(this.Entity);
+            }
+
+
+            if (Room.Model.ModelType == 0)
+            {
+                if (Position.X == 16 && Position.Y == 18)
+                    RoomManager.Instance().GetRoom(2).EnterRoom(this.Entity);
+            }
+
         }
 
         /// <summary>

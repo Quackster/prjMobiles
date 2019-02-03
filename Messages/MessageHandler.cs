@@ -10,7 +10,7 @@ namespace Squirtle.Messages
 {
     class MessageHandler
     {
-        private static readonly ILog _log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog _log = LogManager.GetLogger(typeof(MessageHandler));
 
         private static MessageHandler _messageHandler;
         private Dictionary<string, IMessage> _messages;

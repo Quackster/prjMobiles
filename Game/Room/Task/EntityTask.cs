@@ -1,15 +1,17 @@
-﻿using Squirtle.Game.Entity;
+﻿using log4net;
+using Squirtle.Game.Entity;
 using Squirtle.Game.Pathfinder;
 using Squirtle.Network.Streams;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace Squirtle.Game.Room.Task
 {
     public class EntityTask
     {
+        private static readonly ILog _log = LogManager.GetLogger(typeof(EntityTask));
+
         private Timer _timer;
         private RoomInstance _room;
 
@@ -30,7 +32,7 @@ namespace Squirtle.Game.Room.Task
             if (this._timer != null)
                 return;
 
-            this._timer = new Timer(new TimerCallback(Run), null, 500, 500);
+            _timer = new Timer(new TimerCallback(Run), null, 500, 500);
         }
 
         /// <summary>
@@ -41,7 +43,8 @@ namespace Squirtle.Game.Room.Task
             if (this._timer == null)
                 return;
 
-            this._timer.Change(Timeout.Infinite, Timeout.Infinite);
+            _timer.Change(Timeout.Infinite, Timeout.Infinite);
+            _timer = null;
         }
 
         /// <summary>
@@ -50,27 +53,40 @@ namespace Squirtle.Game.Room.Task
         /// <param name="state">whatever this means??</param>
         private void Run(object state)
         {
-            var entityUpdates = new List<IEntity>();
-
-            foreach (IEntity entity in this._room.Entities)
+            try
             {
-                this.ProcessUser(entity);
 
-                if (entity.RoomUser.NeedsUpdate)
+                var entityUpdates = new List<IEntity>();
+
+                List<IEntity> copy;
+
+                lock (_room.Entities)
+                    copy = new List<IEntity>(_room.Entities);
+
+                foreach (IEntity entity in copy)
                 {
-                    entity.RoomUser.NeedsUpdate = false;
-                    entityUpdates.Add(entity);
+                    ProcessUser(entity);
+
+                    if (entity.RoomUser.NeedsUpdate)
+                    {
+                        entity.RoomUser.NeedsUpdate = false;
+                        entityUpdates.Add(entity);
+                    }
+                }
+
+                if (entityUpdates.Count > 0)
+                {
+                    var response = Response.Init("STATUS");
+
+                    foreach (var entityUser in entityUpdates)
+                        entityUser.RoomUser.AppendStatusString(response);
+
+                    _room.Send(response);
                 }
             }
-
-            if (entityUpdates.Count > 0)
+            catch (Exception ex)
             {
-                var response = Response.Init("STATUS");
-
-                foreach (var entityUser in entityUpdates)
-                    entityUser.RoomUser.AppendStatusString(response);
-
-                this._room.Send(response);
+                _log.Error(ex);
             }
         }
 
