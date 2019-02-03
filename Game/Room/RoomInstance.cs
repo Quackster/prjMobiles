@@ -14,7 +14,9 @@ namespace Squirtle.Game.Room
     {
         private RoomData _roomData;
         private RoomMapping _roomMapping;
+
         private EntityTask _entityTask;
+        private BotTask _botTask;
 
         private bool _isActive;
         private List<IEntity> _entities;
@@ -76,7 +78,9 @@ namespace Squirtle.Game.Room
             _entities = new List<IEntity>();
             _roomData = roomData;
             _roomMapping = new RoomMapping(this);
+
             _entityTask = new EntityTask(this);
+            _botTask = new BotTask(this);
         }
 
         /// <summary>
@@ -135,16 +139,9 @@ namespace Squirtle.Game.Room
 
                 _entities.Add(entity);
 
-                response = Response.Init("USERS");
-                entity.RoomUser.AppendUserString(response);
-                this.Send(response);
-
-                response = Response.Init("STATUS");
-                entity.RoomUser.AppendStatusString(response);
-                this.Send(response);
-
                 if (!_isActive)
                     StartRoom();
+
 
                 /*spot1
 spot1 is the spotlight on the left-hand side of the room.
@@ -176,6 +173,14 @@ ambient1 fade 255 255 255 9000 - Sets the amount of color to remove from red, gr
                     player.Send(new Response("SHOWPROGRAM\rambient1 fade " + 117 + " " + 40 + " " + 1 + " 1000"));
                 }
             }
+
+            response = Response.Init("USERS");
+            entity.RoomUser.AppendUserString(response);
+            this.Send(response);
+
+            response = Response.Init("STATUS");
+            entity.RoomUser.AppendStatusString(response);
+            this.Send(response);
         }
 
         /// <summary>
@@ -184,6 +189,12 @@ ambient1 fade 255 255 255 9000 - Sets the amount of color to remove from red, gr
         private void StartRoom()
         {
             this._entityTask.CreateTask();
+
+            if (this.Model.ModelType == 0)
+            {
+                this._botTask.CreateWaitress();
+                this._botTask.CreateTask();
+            }
         }
 
         /// <summary>
@@ -198,10 +209,21 @@ ambient1 fade 255 255 255 9000 - Sets the amount of color to remove from red, gr
             response.AppendNewArgument(entity.Details.Username);
             this.Send(response);
 
+            if (!(entity is Player))
+                return;
+
             this._isActive = this.Players.Count > 0;
 
             if (!this._isActive)
+            {
                 this._entityTask.StopTask();
+
+                if (this.Model.ModelType == 0)
+                {
+                    this._botTask.DisposeWaitress();
+                    this._botTask.StopTask();
+                }
+            }
         }
 
         /// <summary>
