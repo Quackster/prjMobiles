@@ -181,6 +181,7 @@ ambient1 fade 255 255 255 9000 - Sets the amount of color to remove from red, gr
         /// </summary>
         private void StartRoom()
         {
+            this._isActive = this.Players.Count > 0;
             this._entityTask.CreateTask();
 
             if (this.Model.ModelType == 0)

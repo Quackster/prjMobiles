@@ -115,8 +115,6 @@ namespace Squirtle.Game.Room.Task
             {
                 if (IsFacingCustomer(customer))
                 {
-                    Console.WriteLine("test123");
-
                     int direction = Rotation.CalculateDirection(_bot.RoomUser.Position.X, _bot.RoomUser.Position.Y, customer.RoomUser.Position.X, customer.RoomUser.Position.Y);
 
                     if (direction != _bot.RoomUser.Position.Rotation)
@@ -159,7 +157,7 @@ namespace Squirtle.Game.Room.Task
 
                 if (entity is Player player)
                 {
-                    if ((player.RoomUser.Position.X >= 4 && player.RoomUser.Position.X <= 18) && (player.RoomUser.Position.Y == 4))
+                    if ((player.RoomUser.Position.X >= 8 && player.RoomUser.Position.X <= 14) && (player.RoomUser.Position.Y == 4))
                         return player;
                 }
             }
@@ -169,7 +167,7 @@ namespace Squirtle.Game.Room.Task
 
         public bool IsFacingCustomer(Player player)
         {
-            if (player.RoomUser.Position.X >= 4 && player.RoomUser.Position.X <= 18 && (player.RoomUser.Position.Y == 4))
+            if (player.RoomUser.Position.X >= 8 && player.RoomUser.Position.X <= 14 && (player.RoomUser.Position.Y == 4))
             {
                 if ((_bot.RoomUser.Position.X == player.RoomUser.Position.X) && _bot.RoomUser.Position.Y == 2)
                 {
