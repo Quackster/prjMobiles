@@ -85,8 +85,6 @@ namespace Squirtle.Game.Room
         /// <param name="entity">the entity to login</param>
         public void EnterRoom(IEntity entity, Position startPosition = null)
         {
-            Console.WriteLine("Enter room request: " + _roomData.Id);
-
             var roomModel = this.Model;
 
             if (roomModel == null)
@@ -103,6 +101,17 @@ namespace Squirtle.Game.Room
             entity.RoomUser.Reset();
             entity.RoomUser.RoomId = _roomData.Id;
             entity.RoomUser.Position = roomPosition;
+
+            /*if (entity.Details.Head == 9 && entity.Details.Shirt == 9 && entity.Details.Pants == 9)
+            {
+                //entity.RoomUser.Status.Add("stand", ""); // waiting
+                //entity.RoomUser.Status.Add("taked", ""); // go to fridge
+                entity.RoomUser.Position.X = 12;
+                entity.RoomUser.Position.Y = 2;
+                entity.RoomUser.Position.Rotation = 4;
+                entity.RoomUser.Position.Z = 0.3;
+                entity.RoomUser.Status.Add("gived", "");
+            }*/
 
             if (entity is Player player)
             {
