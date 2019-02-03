@@ -143,6 +143,10 @@ namespace Squirtle.Game.Room.Task
             }
         }
 
+        /// <summary>
+        /// Locates a customer, if found one
+        /// </summary>
+        /// <returns>the player, if found</returns>
         public Player FindCustomer()
         {
             List<IEntity> copy;
@@ -152,9 +156,6 @@ namespace Squirtle.Game.Room.Task
 
             foreach (IEntity entity in copy)
             {
-                // 18 4
-                //  4 4
-
                 if (entity is Player player)
                 {
                     if ((player.RoomUser.Position.X >= 8 && player.RoomUser.Position.X <= 14) && (player.RoomUser.Position.Y == 4))
@@ -165,13 +166,17 @@ namespace Squirtle.Game.Room.Task
             return null;
         }
 
+        /// <summary>
+        /// Get if Maarit is facing the customer
+        /// </summary>
+        /// <param name="player">the player to check for</param>
+        /// <returns>true, if successful</returns>
         public bool IsFacingCustomer(Player player)
         {
             if (player.RoomUser.Position.X >= 8 && player.RoomUser.Position.X <= 14 && (player.RoomUser.Position.Y == 4))
             {
                 if ((_bot.RoomUser.Position.X == player.RoomUser.Position.X) && _bot.RoomUser.Position.Y == 2)
                 {
-                    Console.WriteLine("true123");
                     return true;
                 }
             }
