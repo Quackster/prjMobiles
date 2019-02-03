@@ -156,9 +156,12 @@ ambient1 is the color overlay for the entire room.
 
 ambient1 fade 255 255 255 9000 - Sets the amount of color to remove from red, green and blue color channels with 9000 millisecond transition time from old setting. Setting this for the first time disregards transition time.*/
 
-                /*player.Send(new Response("SHOWPROGRAM\rspot2 move " + roomModel.StartX + " " + roomModel.StartY + " " + roomModel.StartZ + " 5000 "));
-                player.Send(new Response("SHOWPROGRAM\rmirrorball1 on"));
-                player.Send(new Response("SHOWPROGRAM\rambient1 fade " + random.Next(100, 130) + " " + +random.Next(30, 100) + " " + random.Next(0, 50) + " 1000"));*/
+                if (this.Model.ModelType == 1)
+                {
+                    //player.Send(new Response("SHOWPROGRAM\rspot2 move " + roomModel.StartX + " " + roomModel.StartY + " " + roomModel.StartZ + " 5000 "));
+                    player.Send(new Response("SHOWPROGRAM\rmirrorball1 on"));
+                    player.Send(new Response("SHOWPROGRAM\rambient1 fade " + 117 + " " + 40 + " " + 1 + " 1000"));
+                }
             }
         }
 
