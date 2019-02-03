@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace Squirtle.Game.Room.Task
 {
-    class BotTask
+    public class BotTask
     {
         private static readonly ILog _log = LogManager.GetLogger(typeof(EntityTask));
         private static Random _random;
@@ -18,7 +18,8 @@ namespace Squirtle.Game.Room.Task
         private Timer _timer;
         private Bot _bot;
         private RoomInstance _room;
-    
+        private Player _currentCustomer;
+
         private List<Position> _walkingPositions;
         private long _walkingTimer;
 
@@ -109,38 +110,61 @@ namespace Squirtle.Game.Room.Task
         /// <param name="state">the state</param>
         private void Run(object state)
         {
-            var customer = this.FindCustomer();
-
-            if (customer != null)
+            if (_currentCustomer != null)
             {
-                if (IsFacingCustomer(customer))
-                {
-                    int direction = Rotation.CalculateDirection(_bot.RoomUser.Position.X, _bot.RoomUser.Position.Y, customer.RoomUser.Position.X, customer.RoomUser.Position.Y);
+                if ((_currentCustomer.RoomUser.RoomId != _room.Data.Id) || !IsFacingCustomer(_currentCustomer))
+                    _currentCustomer = null;
+            }
 
-                    if (direction != _bot.RoomUser.Position.Rotation)
+            if (_currentCustomer == null)
+            {
+                var customer = this.FindCustomer();
+
+                if (customer != null)
+                {
+                    if (IsFacingCustomer(customer))
                     {
-                        _bot.RoomUser.Position.Rotation = direction;
-                        _bot.RoomUser.NeedsUpdate = true;
+                        int direction = Rotation.CalculateDirection(_bot.RoomUser.Position.X, _bot.RoomUser.Position.Y, customer.RoomUser.Position.X, customer.RoomUser.Position.Y);
+
+                        if (direction != _bot.RoomUser.Position.Rotation)
+                        {
+                            _bot.RoomUser.Position.Rotation = direction;
+                            _bot.RoomUser.NeedsUpdate = true;
+                            _currentCustomer = customer;
+                        }
+                    }
+                    else
+                    {
+                        if (_bot.RoomUser.Position.X != customer.RoomUser.Position.X || _bot.RoomUser.Position.Y != 2)
+                            _bot.RoomUser.Move(customer.RoomUser.Position.X, 2);
                     }
                 }
                 else
                 {
-                    if (_bot.RoomUser.Position.X != customer.RoomUser.Position.X || _bot.RoomUser.Position.Y != 2)
-                        _bot.RoomUser.Move(customer.RoomUser.Position.X, 2);
+                    _currentCustomer = null;
+
+                    if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() > _walkingTimer)
+                    {
+                        _walkingTimer = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + _random.Next(3, 8);
+
+                        Position targetPosition = _walkingPositions[_random.Next(0, this._walkingPositions.Count)];
+
+                        if (targetPosition != null)
+                            _bot.RoomUser.Move(targetPosition.X, targetPosition.Y);
+                    }
                 }
             }
-            else
-            {
-                if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() > _walkingTimer)
-                {
-                    _walkingTimer = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + _random.Next(3, 8);
+        }
 
-                    Position targetPosition = _walkingPositions[_random.Next(0, this._walkingPositions.Count)];
+        public bool HandleCommand(Player from, string command)
+        {
+            if (!IsFacingCustomer(from))
+                return false;
 
-                    if (targetPosition != null)
-                        _bot.RoomUser.Move(targetPosition.X, targetPosition.Y);
-                }
-            }
+            if (_currentCustomer != null && _currentCustomer != from)
+                return false;
+
+            return true;
         }
 
         /// <summary>

@@ -47,6 +47,14 @@ namespace Squirtle.Game.Room
         }
 
         /// <summary>
+        /// Get the bot task
+        /// </summary>
+        public BotTask BotTask
+        {
+            get { return _botTask; }
+        }
+
+        /// <summary>
         /// Get the list of players
         /// </summary>
         public List<Player> Players

@@ -11,6 +11,14 @@ namespace Squirtle.Messages
             if (player.RoomUser.Room == null)
                 return;
 
+            if (player.RoomUser.Room.Model.ModelType == 0)
+            {
+                if (player.RoomUser.Room.BotTask.HandleCommand(player, request.Body))
+                {
+                    return;
+                }
+            }
+
             var response = new Response("CHAT");
             response.AppendNewArgument(player.Details.Username);
             response.AppendArgument(request.Body);
