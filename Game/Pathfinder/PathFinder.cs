@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Squirtle.Game.Entity;
 using Squirtle.Game.Room;
 
 namespace Squirtle.Game.Pathfinder
@@ -10,11 +11,11 @@ namespace Squirtle.Game.Pathfinder
     {
         private static bool NoDiag = false;
 
-        public static List<Position> FindPath(RoomInstance room, Position start, Position end)
+        public static List<Position> FindPath(IEntity entity, RoomInstance room, Position start, Position end)
         {
             List<Position> Path = new List<Position>();
 
-            PathfinderNode Nodes = FindPathReversed(room, end, start);
+            PathfinderNode Nodes = FindPathReversed(entity, room, end, start);
 
             if (Nodes != null) // make sure we do have a path first
             {
@@ -30,7 +31,7 @@ namespace Squirtle.Game.Pathfinder
             return Path;
         }
 
-        private static PathfinderNode FindPathReversed(RoomInstance room, Position start, Position end)
+        private static PathfinderNode FindPathReversed(IEntity entity, RoomInstance room, Position start, Position end)
         {
             MinHeap<PathfinderNode> OpenList = new MinHeap<PathfinderNode>(256);
 
@@ -57,7 +58,7 @@ namespace Squirtle.Game.Pathfinder
                     Tmp = current.Position + (NoDiag ? NoDiagMovePoints[i] : MovePoints[i]);
                     bool IsFinalMove = (Tmp.X == end.X && Tmp.Y == end.Y); // are we at the final position?
 
-                    if (room.Mapping.IsValidStep(new Position(current.Position.X, current.Position.Y), Tmp, IsFinalMove)) // need to set the from positions
+                    if (room.Mapping.IsValidStep(entity, new Position(current.Position.X, current.Position.Y), Tmp, IsFinalMove)) // need to set the from positions
                     {
                         if (Map[Tmp.X, Tmp.Y] == null)
                         {

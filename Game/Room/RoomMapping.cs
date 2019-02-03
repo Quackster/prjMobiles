@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Squirtle.Game.Entity;
 using Squirtle.Game.Items;
 using Squirtle.Game.Pathfinder;
 using Squirtle.Game.Room.Model;
@@ -30,12 +31,12 @@ namespace Squirtle.Game.Room
         /// <param name="isFinalMove">if the next position is final</param>
         /// <param name="list"></param>
         /// <returns></returns>
-        public bool IsValidStep(Position position, Position tmp, bool isFinalMove)
+        public bool IsValidStep(IEntity entity, Position position, Position tmp, bool isFinalMove)
         {
-            if (!RoomTile.IsValidTile(_room, position))
+            if (!RoomTile.IsValidTile(_room, position, entity))
                 return false;
 
-            if (!RoomTile.IsValidTile(_room, tmp))
+            if (!RoomTile.IsValidTile(_room, tmp, entity))
                 return false;
 
             // Block stairwell in model 1

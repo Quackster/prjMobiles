@@ -83,7 +83,7 @@ namespace Squirtle.Game.Players
             }
             else
             {
-                var room = RoomManager.Instance().GetRoom(2);
+                var room = RoomManager.Instance().GetRoom(1);
 
                 if (room != null)
                     room.EnterRoom(this);
@@ -95,6 +95,9 @@ namespace Squirtle.Game.Players
         /// </summary>
         public void Disconnect()
         {
+            if (_roomUser == null)
+                return;
+
             var room = _roomUser.Room;
 
             if (room != null)

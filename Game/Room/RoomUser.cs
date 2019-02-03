@@ -105,10 +105,10 @@ namespace Squirtle.Game.Room
 
             this.Goal = new Position(x, y);
 
-            if (!RoomTile.IsValidTile(this.Room, this.Goal))
+            if (!RoomTile.IsValidTile(this.Room, this.Goal, this.Entity))
                 return;
 
-            var pathList = Pathfinder.Pathfinder.FindPath(this.Room, this.Position, this.Goal);
+            var pathList = Pathfinder.Pathfinder.FindPath(this.Entity, this.Room, this.Position, this.Goal);
 
             if (pathList == null)
                 return;

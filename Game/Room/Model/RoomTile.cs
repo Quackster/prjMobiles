@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Squirtle.Game.Entity;
 using Squirtle.Game.Items;
 using Squirtle.Game.Pathfinder;
 
@@ -14,7 +15,7 @@ namespace Squirtle.Game.Room.Model
         /// <param name="room">the room instance</param>
         /// <param name="position">the tile coordinate</param>
         /// <returns></returns>
-        internal static bool IsValidTile(RoomInstance room, Position position)
+        internal static bool IsValidTile(RoomInstance room, Position position, IEntity e)
         {
             if (!room.Model.IsValidPosition(position))
                 return false;
@@ -26,6 +27,15 @@ namespace Squirtle.Game.Room.Model
                 if (item.ClassName == "chair")
                     return true;
                 else
+                    return false;
+            }
+
+            foreach (IEntity entity in room.Entities)
+            {
+                if (entity.Details.Username == e.Details.Username)
+                    continue;
+
+                if (entity.RoomUser.Position.X == position.X && entity.RoomUser.Position.Y == position.Y)
                     return false;
             }
 

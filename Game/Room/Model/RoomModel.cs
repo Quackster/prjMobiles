@@ -8,13 +8,24 @@ namespace Squirtle.Game.Room.Model
 {
     public class RoomModel
     {
-        private int model_id;
-        private int start_x;
-        private int start_y;
-        private int start_z;
-        private int start_rotation;
-        private string heightmap;
-        private string objects;
+        private readonly int model_id;
+        private readonly int start_x;
+        private readonly int start_y;
+        private readonly int start_z;
+        private readonly int start_rotation;
+        private readonly string heightmap;
+        private readonly string objects;
+
+        public RoomModel(int model_id, int start_x, int start_y, int start_z, int start_rotation, string heightmap, string objects)
+        {
+            this.model_id = model_id;
+            this.start_x = start_x;
+            this.start_y = start_y;
+            this.start_z = start_z;
+            this.start_rotation = start_rotation;
+            this.heightmap = heightmap;
+            this.objects = objects;
+        }
 
         public int ModelType { get { return model_id; } }
         public int StartX { get { return start_x; }  }
