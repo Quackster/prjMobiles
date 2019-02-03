@@ -44,6 +44,16 @@ namespace Squirtle.Game.Room
                     return false;
             }
 
+            // Block stairwell in model 1
+            if (_room.Model.ModelType == 1)
+            {
+                if ((position.X == 13 && position.Y == 2) && (tmp.X == 14 && tmp.Y == 1))
+                    return false;
+
+                if ((position.X == 14 && position.Y == 1) && (tmp.X == 13 && tmp.Y == 2))
+                    return false;
+            }
+
             int oldHeight = _room.Model.TileHeights[position.X, position.Y];
             int newHeight = _room.Model.TileHeights[tmp.X, tmp.Y];
 
