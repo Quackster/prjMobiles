@@ -209,12 +209,16 @@ namespace Squirtle.Game.Room.Tasks
 
         public void PerformFridgeGrab()
         {
+            if (!FridgeDrinkGrab || _currentCustomer == null)
+                return;
+
             _bot.RoomUser.Status.Remove("stand");
             _bot.RoomUser.Status.Add("taked", "");
             _bot.RoomUser.Position.Rotation = 0;
             _bot.RoomUser.NeedsUpdate = true;
 
             GiveDrinkPlayer = true;
+            FridgeDrinkGrab = false;
 
             Task.Delay(1000).ContinueWith(t => PerformGiveDrink());
         }
@@ -240,6 +244,7 @@ namespace Squirtle.Game.Room.Tasks
                 _bot.RoomUser.NeedsUpdate = true;
 
                 GiveDrinkPlayer = false;
+
             }
         }
 
