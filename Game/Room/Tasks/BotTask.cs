@@ -177,7 +177,7 @@ namespace Squirtle.Game.Room.Tasks
             if (FridgeDrinkGrab)
             {
                 if (_bot.RoomUser.Position.X == 8 && _bot.RoomUser.Position.Y == 2)
-                    Task.Delay(1000).ContinueWith(t => PerformFridgeGrab());
+                    Task.Delay(500).ContinueWith(t => PerformFridgeGrab());
             }
 
             if (GiveDrinkPlayer)
@@ -186,6 +186,11 @@ namespace Squirtle.Game.Room.Tasks
             }
         }
 
+        /// <summary>
+        /// Handle bot commands
+        /// </summary>
+        /// <param name="from">the character it said from</param>
+        /// <param name="command">the actual command</param>
         public void HandleCommand(Player from, string command)
         {
             if (!IsFacingCustomer(from))
@@ -203,10 +208,13 @@ namespace Squirtle.Game.Room.Tasks
                 _bot.RoomUser.Move(8, 2);
 
                 if (_bot.RoomUser.Position.X == 8 && _bot.RoomUser.Position.Y == 2)
-                    Task.Delay(1000).ContinueWith(t => PerformFridgeGrab());
+                    Task.Delay(500).ContinueWith(t => PerformFridgeGrab());
             }
         }
 
+        /// <summary>
+        /// Peform action to grab from fridge
+        /// </summary>
         public void PerformFridgeGrab()
         {
             if (!FridgeDrinkGrab || _currentCustomer == null)
@@ -223,6 +231,9 @@ namespace Squirtle.Game.Room.Tasks
             Task.Delay(1000).ContinueWith(t => PerformGiveDrink());
         }
 
+        /// <summary>
+        /// Perform give drink action to the other user
+        /// </summary>
         public void PerformGiveDrink()
         {
             if (!GiveDrinkPlayer || _currentCustomer == null)
@@ -248,6 +259,9 @@ namespace Squirtle.Game.Room.Tasks
             }
         }
 
+        /// <summary>
+        /// Perform remove drink and add drink to the other hand, the end of the transaction
+        /// </summary>
         private void RemoveGiveDrink()
         {
             _bot.RoomUser.Status.Remove("gived");
