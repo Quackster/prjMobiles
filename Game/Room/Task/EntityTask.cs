@@ -116,36 +116,4 @@ namespace Squirtle.Game.Room.Task
             }
         }
     }
-
-    internal class Rotation
-    {
-        internal static int CalculateDirection(int x, int y, int to_x, int to_y)
-        {
-            if (x == to_x)
-            {
-                if (y < to_y)
-                    return 4;
-                else
-                    return 0;
-            }
-            else if (x > to_x)
-            {
-                if (y == to_y)
-                    return 6;
-                else if (y < to_y)
-                    return 5;
-                else
-                    return 7;
-            }
-            else
-            {
-                if (y == to_y)
-                    return 2;
-                else if (y < to_y)
-                    return 3;
-                else
-                    return 1;
-            }
-        }
-    }
 }
