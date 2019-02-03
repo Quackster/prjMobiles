@@ -194,7 +194,7 @@ namespace Squirtle.Game.Room.Tasks
             if (!IsFacingCustomer(from))
                 return;
 
-            if (_currentCustomer != from)
+            if ((_currentCustomer != from) && _currentCustomer != null)
                 return;
 
             if (FridgeDrinkGrab || GiveDrinkPlayer)

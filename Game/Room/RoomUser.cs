@@ -188,21 +188,28 @@ namespace Squirtle.Game.Room
         /// Append the status string to the response
         /// </summary>
         /// <param name="response">the response</param>
-        public void AppendStatusString(Response response)
+        public void AppendStatusString(Response response, bool isDrinking = false)
         {
             response.AppendNewArgument(this.Entity.Details.Username);
             response.AppendArgument(string.Format("{0},{1},{2},{3},{4}/", this.Position.X, this.Position.Y, this.Position.Z, this.Position.HeadRotation, this.Position.BodyRotation));
 
             foreach (var kvp in Status)
             {
-                response.Append(kvp.Key);
-
-                if (kvp.Value.Length > 0)
+                if (isDrinking && kvp.Key == "carryd")
                 {
-                    response.Append(" ");
-                    response.Append(kvp.Value);
+                    response.Append("drink");
                 }
+                else
+                {
+                    response.Append(kvp.Key);
 
+                    if (kvp.Value.Length > 0)
+                    {
+                        response.Append(" ");
+                        response.Append(kvp.Value);
+                    }
+
+                }
                 response.Append("/");
             }
 
