@@ -290,7 +290,7 @@ namespace Squirtle.Game.Room.Tasks
                     if (entity.RoomUser.Status.ContainsKey("carryd"))
                         continue;
 
-                    if ((player.RoomUser.Position.X >= 8 && player.RoomUser.Position.X <= 14) && (player.RoomUser.Position.Y == 4))
+                    if (IsCustomerWaiting(player))
                         return player;
                 }
             }
