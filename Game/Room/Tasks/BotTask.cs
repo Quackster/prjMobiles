@@ -151,7 +151,7 @@ namespace Squirtle.Game.Room.Tasks
                 {
                     if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() > _walkingTimer)
                     {
-                        _walkingTimer = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + _random.Next(3, 8);
+                        _walkingTimer = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + _random.Next(3, 10);
 
                         Position targetPosition = _walkingPositions[_random.Next(0, this._walkingPositions.Count)];
 
