@@ -26,6 +26,8 @@ namespace Squirtle.Messages
             _messages.Add("REGISTER", new REGISTER());
             _messages.Add("SHOUT", new SHOUT());
             _messages.Add("CHAT", new CHAT());
+            _messages.Add("LOOKTO", new LOOKTO());
+            _messages.Add("DROPDRINK", new DROPDRINK());
 
             //[2019-02-03 13:21:32,984] DEBUG  Squirtle.Messages.MessageHandler - Received: UPDATE 123 you@domain.com 2,1,14 noidea x Male no 45 Alex the best
         }

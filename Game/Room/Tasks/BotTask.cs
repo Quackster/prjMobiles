@@ -181,9 +181,7 @@ namespace Squirtle.Game.Room.Tasks
             }
 
             if (GiveDrinkPlayer)
-            {
                 Task.Delay(1000).ContinueWith(t => PerformGiveDrink());
-            }
         }
 
         /// <summary>
