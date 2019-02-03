@@ -91,11 +91,6 @@ namespace Squirtle.Messages
 
             player.login(playerData, true);*/
 
-            response = new Response("ERROR");
-            response.AppendArgument("Successfully registered!");
-            player.Send(response);
-
-            player.Channel.CloseAsync();
         }
     }
 }
