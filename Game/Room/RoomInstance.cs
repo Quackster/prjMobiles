@@ -3,7 +3,7 @@ using Squirtle.Game.Entity;
 using Squirtle.Game.Pathfinder;
 using Squirtle.Game.Players;
 using Squirtle.Game.Room.Model;
-using Squirtle.Game.Room.Task;
+using Squirtle.Game.Room.Tasks;
 using Squirtle.Network.Streams;
 using Squirtle.Storage.Access;
 using System;

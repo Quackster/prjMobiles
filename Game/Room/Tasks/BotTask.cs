@@ -7,8 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
-namespace Squirtle.Game.Room.Task
+namespace Squirtle.Game.Room.Tasks
 {
     public class BotTask
     {
@@ -19,6 +20,9 @@ namespace Squirtle.Game.Room.Task
         private Bot _bot;
         private RoomInstance _room;
         private Player _currentCustomer;
+
+        private bool FridgeDrinkGrab;
+        private bool GiveDrinkPlayer;
 
         private List<Position> _walkingPositions;
         private long _walkingTimer;
@@ -112,8 +116,12 @@ namespace Squirtle.Game.Room.Task
         {
             if (_currentCustomer != null)
             {
-                if ((_currentCustomer.RoomUser.RoomId != _room.Data.Id) || !IsFacingCustomer(_currentCustomer))
+                if ((_currentCustomer.RoomUser.RoomId != _room.Data.Id) || !IsCustomerWaiting(_currentCustomer))
+                {
+                    FridgeDrinkGrab = false;
+                    GiveDrinkPlayer = false;
                     _currentCustomer = null;
+                }
             }
 
             if (_currentCustomer == null)
@@ -154,13 +162,85 @@ namespace Squirtle.Game.Room.Task
             }
         }
 
+        /// <summary>
+        /// Handler for when the bot stops walking
+        /// </summary>
+        public void StoppedWalking()
+        {
+            if (_currentCustomer == null)
+            {
+                _bot.RoomUser.Status.Add("stand", "");
+                _bot.RoomUser.NeedsUpdate = true;
+                return;
+            }
+
+            if (FridgeDrinkGrab)
+            {
+                if (_bot.RoomUser.Position.X == 8 && _bot.RoomUser.Position.Y == 2)
+                    Task.Delay(1000).ContinueWith(t => PerformFridgeGrab());
+            }
+
+            if (GiveDrinkPlayer)
+            {
+                Task.Delay(1000).ContinueWith(t => PerformGiveDrink());
+            }
+        }
+
         public void HandleCommand(Player from, string command)
         {
             if (!IsFacingCustomer(from))
                 return;
 
-            if (_currentCustomer != null && _currentCustomer != from)
+            if (_currentCustomer != from)
                 return;
+
+            if (FridgeDrinkGrab || GiveDrinkPlayer)
+                return;
+
+            if (command == "d")
+            {
+                FridgeDrinkGrab = true;
+                _bot.RoomUser.Move(8, 2);
+
+                if (_bot.RoomUser.Position.X == 8 && _bot.RoomUser.Position.Y == 2)
+                    Task.Delay(1000).ContinueWith(t => PerformFridgeGrab());
+            }
+        }
+
+        public void PerformFridgeGrab()
+        {
+            _bot.RoomUser.Status.Remove("stand");
+            _bot.RoomUser.Status.Add("taked", "");
+            _bot.RoomUser.Position.Rotation = 0;
+            _bot.RoomUser.NeedsUpdate = true;
+
+            GiveDrinkPlayer = true;
+
+            Task.Delay(1000).ContinueWith(t => PerformGiveDrink());
+        }
+
+        public void PerformGiveDrink()
+        {
+            if (!GiveDrinkPlayer || _currentCustomer == null)
+                return;
+
+            if (!IsFacingCustomer(_currentCustomer))
+            {
+                _bot.RoomUser.Move(_currentCustomer.RoomUser.Position.X, 2);
+                return;
+            }
+            else
+            {
+                int direction = Rotation.CalculateDirection(_bot.RoomUser.Position.X, _bot.RoomUser.Position.Y, _currentCustomer.RoomUser.Position.X, _currentCustomer.RoomUser.Position.Y);
+
+                _bot.RoomUser.Position.Rotation = direction;
+                _bot.RoomUser.Status.Remove("stand");
+                _bot.RoomUser.Status.Remove("taked");
+                _bot.RoomUser.Status.Add("gived", "");
+                _bot.RoomUser.NeedsUpdate = true;
+
+                GiveDrinkPlayer = false;
+            }
         }
 
         /// <summary>
@@ -202,6 +282,16 @@ namespace Squirtle.Game.Room.Task
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Get if the customer is waiting
+        /// </summary>
+        /// <param name="player">the packer to check</param>
+        /// <returns>true, if successful</returns>
+        public bool IsCustomerWaiting(Player player)
+        {
+            return (player.RoomUser.Position.X >= 8 && player.RoomUser.Position.X <= 14 && (player.RoomUser.Position.Y == 4));
         }
     }
 }

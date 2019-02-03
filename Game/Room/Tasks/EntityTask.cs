@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Squirtle.Game.Room.Task
+namespace Squirtle.Game.Room.Tasks
 {
     public class EntityTask
     {
@@ -127,6 +127,12 @@ namespace Squirtle.Game.Room.Task
 
                     if (entity.RoomUser.Status.ContainsKey("stand"))
                         entity.RoomUser.Status.Remove("stand");
+
+                    if (entity.RoomUser.Status.ContainsKey("taked"))
+                        entity.RoomUser.Status.Remove("taked");
+
+                    if (entity.RoomUser.Status.ContainsKey("gived"))
+                        entity.RoomUser.Status.Remove("gived");
 
                     entity.RoomUser.Position.Rotation = rotation;
                     entity.RoomUser.Status.Add("mv", string.Format("{0},{1},{2}", next.X, next.Y, height));

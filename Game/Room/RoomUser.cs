@@ -136,7 +136,7 @@ namespace Squirtle.Game.Room
             this.Status.Remove("mv");
 
             if (this.Entity is Bot)
-                this.Status.Add("stand", "");
+                this.Room.BotTask.StoppedWalking();
 
             Item item = this.Room.Mapping.LocateItem(Position.X, Position.Y);
 
