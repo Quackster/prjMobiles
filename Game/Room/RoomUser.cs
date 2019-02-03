@@ -1,4 +1,5 @@
-﻿using Squirtle.Game.Entity;
+﻿using Squirtle.Game.Bots;
+using Squirtle.Game.Entity;
 using Squirtle.Game.Items;
 using Squirtle.Game.Pathfinder;
 using Squirtle.Game.Room.Model;
@@ -105,11 +106,6 @@ namespace Squirtle.Game.Room
 
             this.Goal = new Position(x, y);
 
-            foreach (var e in Room.Entities)
-            {
-                Console.WriteLine(e.Details.Username + " - Coords: " + e.RoomUser.Position.X + " / " + e.RoomUser.Position.Y);
-            }
-
             if (!RoomTile.IsValidTile(this.Room, this.Goal, this.Entity))
                 return;
 
@@ -138,6 +134,9 @@ namespace Squirtle.Game.Room
             this.NeedsUpdate = true;
             this.NextPosition = null;
             this.Status.Remove("mv");
+
+            if (this.Entity is Bot)
+                this.Status.Add("stand", "");
 
             Item item = this.Room.Mapping.LocateItem(Position.X, Position.Y);
 

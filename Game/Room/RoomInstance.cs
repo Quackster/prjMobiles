@@ -1,4 +1,5 @@
-﻿using Squirtle.Game.Entity;
+﻿using Squirtle.Game.Bots;
+using Squirtle.Game.Entity;
 using Squirtle.Game.Pathfinder;
 using Squirtle.Game.Players;
 using Squirtle.Game.Room.Model;
@@ -105,6 +106,9 @@ namespace Squirtle.Game.Room
             entity.RoomUser.Reset();
             entity.RoomUser.RoomId = _roomData.Id;
             entity.RoomUser.Position = roomPosition;
+
+            if (entity is Bot)
+                _entities.Add(entity);
 
             if (entity is Player player)
             {
