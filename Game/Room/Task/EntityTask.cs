@@ -122,6 +122,9 @@ namespace Squirtle.Game.Room.Task
                     if (entity.RoomUser.Status.ContainsKey("mv"))
                         entity.RoomUser.Status.Remove("mv");
 
+                    if (entity.RoomUser.Status.ContainsKey("sit"))
+                        entity.RoomUser.Status.Remove("sit");
+
                     entity.RoomUser.Position.Rotation = rotation;
                     entity.RoomUser.Status.Add("mv", string.Format("{0},{1},{2}", next.X, next.Y, height));
                     entity.RoomUser.NextPosition = next;

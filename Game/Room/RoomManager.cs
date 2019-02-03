@@ -14,15 +14,22 @@ namespace Squirtle.Game.Room
         private Dictionary<int, RoomModel> _roomModels;
 
         /// <summary>
-        /// Room manager constructor
+        /// Loads models
         /// </summary>
-        public RoomManager()
+        public void LoadModels()
         {
-            _rooms = RoomDao.GetRooms();
             _roomModels = RoomDao.GetModels();
 
             foreach (var kvp in _roomModels)
                 kvp.Value.ParseMap();
+        }
+
+        /// <summary>
+        /// Loads rooms
+        /// </summary>
+        public void LoadRooms()
+        {
+            _rooms = RoomDao.GetRooms();
         }
 
         /// <summary>

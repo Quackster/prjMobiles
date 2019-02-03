@@ -1,4 +1,5 @@
-﻿using Squirtle.Game.Pathfinder;
+﻿using Squirtle.Game.Items;
+using Squirtle.Game.Pathfinder;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -68,6 +69,23 @@ namespace Squirtle.Game.Room.Model
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Parse database items
+        /// </summary>
+        /// <returns>list of item instances</returns>
+        public List<Item> ParseItems()
+        {
+            var itemList = new List<Item>();
+
+            foreach (var furniLine in this.Objects.Split('\r'))
+            {
+                string[] data = furniLine.Split(' ');
+                itemList.Add(new Item(data[1], int.Parse(data[2]), int.Parse(data[3]), int.Parse(data[4]), int.Parse(data[5])));
+            }
+
+            return itemList;
         }
 
         /// <summary>

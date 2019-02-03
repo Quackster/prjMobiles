@@ -1,4 +1,5 @@
 ﻿using Squirtle.Game.Entity;
+using Squirtle.Game.Items;
 using Squirtle.Game.Pathfinder;
 using Squirtle.Game.Room.Model;
 using Squirtle.Network.Streams;
@@ -133,17 +134,32 @@ namespace Squirtle.Game.Room
             this.NextPosition = null;
             this.Status.Remove("mv");
 
+            Item item = this.Room.Mapping.LocateItem(Position.X, Position.Y);
+
+            if (item != null)
+            {
+                this.Status.Add("sit", "1");
+                this.Position.Rotation = item.Position.Rotation;
+                this.NeedsUpdate = true;
+            }
+
             if (Room.Model.ModelType == 1)
             {
                 if (Position.X == 0 && Position.Y == 7)
+                {
                     RoomManager.Instance().GetRoom(1).EnterRoom(this.Entity, new Position(15, 18, 0, 7, 6));
+                    return;
+                }
             }
 
 
             if (Room.Model.ModelType == 0)
             {
                 if (Position.X == 16 && Position.Y == 18)
+                {
                     RoomManager.Instance().GetRoom(2).EnterRoom(this.Entity, new Position(1, 7, 0, 3, 2));
+                    return;
+                }
             }
 
         }

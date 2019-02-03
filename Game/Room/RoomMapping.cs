@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Squirtle.Game.Items;
 using Squirtle.Game.Pathfinder;
+using Squirtle.Game.Room.Model;
 
 namespace Squirtle.Game.Room
 {
     public class RoomMapping
     {
         private RoomInstance _room;
+        private List<Item> _items;
 
         /// <summary>
         /// Constructor for room mapping
@@ -16,6 +19,7 @@ namespace Squirtle.Game.Room
         public RoomMapping(RoomInstance roomInstance)
         {
             this._room = roomInstance;
+            this._items = roomInstance.Model.ParseItems();
         }
 
         /// <summary>
@@ -28,10 +32,10 @@ namespace Squirtle.Game.Room
         /// <returns></returns>
         public bool IsValidStep(Position position, Position tmp, bool isFinalMove)
         {
-            if (!_room.Model.IsValidPosition(position))
+            if (!RoomTile.IsValidTile(_room, position))
                 return false;
 
-            if (!_room.Model.IsValidPosition(tmp))
+            if (!RoomTile.IsValidTile(_room, tmp))
                 return false;
 
             // Block stairwell in model 1
@@ -60,7 +64,40 @@ namespace Squirtle.Game.Room
             if (Math.Abs(oldHeight - newHeight) > 1)
                 return false; // Can't go higher than 1 square
 
+            if (!isFinalMove)
+            {
+                Item item = this.LocateItem(tmp.X, tmp.Y);
+
+                if (item != null && item.ClassName == "chair")
+                    return false;
+            }
+
             return true;
+        }
+
+        /// <summary>
+        /// Find an item by given coordinates.
+        /// </summary>
+        /// <param name="x">the x coordinate</param>
+        /// <param name="y">the y coordinate</param>
+        /// <returns>the item instance</returns>
+        public Item LocateItem(int x, int y)
+        {
+            foreach (Item item in _items)
+            {
+                if (item.Position.X == x && item.Position.Y == y)
+                    return item;
+
+                foreach (var tile in item.GetAffectedTiles())
+                {
+                    if (tile.X == x && tile.Y == y)
+                    {
+                        return item;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

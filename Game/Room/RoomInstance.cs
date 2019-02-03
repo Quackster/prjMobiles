@@ -4,6 +4,7 @@ using Squirtle.Game.Players;
 using Squirtle.Game.Room.Model;
 using Squirtle.Game.Room.Task;
 using Squirtle.Network.Streams;
+using Squirtle.Storage.Access;
 using System;
 using System.Collections.Generic;
 
@@ -106,7 +107,7 @@ namespace Squirtle.Game.Room
             if (entity is Player player)
             {
                 player.Send(Response.Init("HEIGHTMAP" + (char)13 + roomModel.Heightmap.Replace("|", "\r")));
-                player.Send(Response.Init("OBJECTS " + _roomData.ModelType + (char)13 + roomModel.Objects));
+                player.Send(Response.Init("OBJECTS " + _roomData.ModelType + (char)13 + /*roomModel.*/RoomDao.GetModel(roomModel.ModelType).Objects));
 
                 if (_entities.Count > 0)
                 {
@@ -158,6 +159,9 @@ ambient1 fade 255 255 255 9000 - Sets the amount of color to remove from red, gr
 
                 if (this.Model.ModelType == 1)
                 {
+                    player.Send(new Response("SHOWPROGRAM\rspot1 move " + 7 + " " + 10 + " " + 0 + " 5000 "));
+                    player.Send(new Response("SHOWPROGRAM\rspot2 move " + 5 + " " + 4 + " " + 0 + " 5000 "));
+
                     //player.Send(new Response("SHOWPROGRAM\rspot2 move " + roomModel.StartX + " " + roomModel.StartY + " " + roomModel.StartZ + " 5000 "));
                     player.Send(new Response("SHOWPROGRAM\rmirrorball1 on"));
                     player.Send(new Response("SHOWPROGRAM\rambient1 fade " + 117 + " " + 40 + " " + 1 + " 1000"));

@@ -55,7 +55,11 @@ namespace Squirtle
             }
 
             PlayerManager.Instance();
+
             RoomManager.Instance();
+            RoomManager.Instance().LoadModels();
+            RoomManager.Instance().LoadRooms();
+
             MessageHandler.Instance();
 
             GameServer.Instance().InitialiseServer(91);
