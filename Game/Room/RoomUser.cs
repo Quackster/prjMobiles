@@ -105,6 +105,11 @@ namespace Squirtle.Game.Room
 
             this.Goal = new Position(x, y);
 
+            foreach (var e in Room.Entities)
+            {
+                Console.WriteLine(e.Details.Username + " - Coords: " + e.RoomUser.Position.X + " / " + e.RoomUser.Position.Y);
+            }
+
             if (!RoomTile.IsValidTile(this.Room, this.Goal, this.Entity))
                 return;
 
@@ -161,6 +166,8 @@ namespace Squirtle.Game.Room
                     return;
                 }
             }
+
+            Console.WriteLine("Coords: " + Position.X + " / " + Position.Y);
 
         }
 

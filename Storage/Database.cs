@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.IO;
 
 namespace Squirtle.Storage
 {
@@ -27,7 +28,7 @@ namespace Squirtle.Storage
             MySqlConnectionStringBuilder connectionString = new MySqlConnectionStringBuilder();
             connectionString.Server = "localhost";
             connectionString.UserID = "root";
-            connectionString.Password = "123";
+            connectionString.Password = File.ReadAllText("password.db");
             connectionString.Database = "squirtle";
 
             var dbConnection = new MySqlConnection(connectionString.ToString());

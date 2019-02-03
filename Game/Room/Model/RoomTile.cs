@@ -15,7 +15,7 @@ namespace Squirtle.Game.Room.Model
         /// <param name="room">the room instance</param>
         /// <param name="position">the tile coordinate</param>
         /// <returns></returns>
-        internal static bool IsValidTile(RoomInstance room, Position position, IEntity e)
+        internal static bool IsValidTile(RoomInstance room, Position position, IEntity user)
         {
             if (!room.Model.IsValidPosition(position))
                 return false;
@@ -32,14 +32,18 @@ namespace Squirtle.Game.Room.Model
 
             foreach (IEntity entity in room.Entities)
             {
-                if (entity.Details.Username == e.Details.Username)
+                if (entity.Details.Username == user.Details.Username)
+                    continue;
+
+                if (entity.RoomUser.Position.X == user.RoomUser.Position.X && entity.RoomUser.Position.Y == user.RoomUser.Position.Y)
                     continue;
 
                 if (entity.RoomUser.Position.X == position.X && entity.RoomUser.Position.Y == position.Y)
+                {
                     return false;
+                }
             }
 
-            // TODO: Entity checking
             return true;
         }
     }
