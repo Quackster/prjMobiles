@@ -149,6 +149,9 @@ namespace Squirtle.Game.Room.Tasks
                     if (entity.RoomUser.Status.ContainsKey("taked"))
                         entity.RoomUser.Status.Remove("taked");
 
+                    if (entity.RoomUser.Status.ContainsKey("takedup"))
+                        entity.RoomUser.Status.Remove("takedup");
+
                     if (entity.RoomUser.Status.ContainsKey("gived"))
                         entity.RoomUser.Status.Remove("gived");
 
