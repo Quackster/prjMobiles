@@ -91,7 +91,7 @@ namespace Squirtle.Game.Room
             {
                 foreach (var key in Status.Keys)
                 {
-                    if (key != "carryd" && key != "dance")
+                    if (key != "carryd" && key != "dance" && key != "drink")
                         RemoveStatus(key);
                 }
             }
