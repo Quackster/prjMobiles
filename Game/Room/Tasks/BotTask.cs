@@ -26,6 +26,7 @@ namespace Squirtle.Game.Room.Tasks
 
         private List<Position> _walkingPositions;
         private long _walkingTimer;
+        private string _drinkRequest;
 
         private string[] _allowedDrinks = new string[]
         {
@@ -223,7 +224,8 @@ namespace Squirtle.Game.Room.Tasks
             {
                 if (command.ToLower().Contains(drink.ToLower()))
                 {
-                    this.StartServingCustomer(drink);
+                    _drinkRequest = drink;
+                    this.StartServingCustomer();
                     break;
                 }
             }
@@ -232,12 +234,12 @@ namespace Squirtle.Game.Room.Tasks
         /// <summary>
         /// Initiates serving customer once asked for a drink
         /// </summary>
-        private void StartServingCustomer(string drinkName)
+        private void StartServingCustomer()
         {
             int walkX = 8;
             int walkY = 2;
 
-            Task.Delay(500).ContinueWith(t => _bot.RoomUser.Talk(string.Format("{0} tulossa.", drinkName.ToLower())));
+            Task.Delay(500).ContinueWith(t => _bot.RoomUser.Talk(string.Format("{0} tulossa.", _drinkRequest.ToLower())));
 
             FridgeDrinkGrab = true;
             _bot.RoomUser.Move(walkX, 2);
@@ -305,7 +307,7 @@ namespace Squirtle.Game.Room.Tasks
             _bot.RoomUser.AddStatus("stand", "");
             _bot.RoomUser.NeedsUpdate = true;
 
-            _currentCustomer.RoomUser.AddStatus("carryd", "Coffee");
+            _currentCustomer.RoomUser.AddStatus("carryd", _drinkRequest);
             _currentCustomer.RoomUser.NeedsUpdate = true;
 
             GiveDrinkPlayer = false;
