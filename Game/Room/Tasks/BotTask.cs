@@ -114,51 +114,58 @@ namespace Squirtle.Game.Room.Tasks
         /// <param name="state">the state</param>
         private void Run(object state)
         {
-            if (_currentCustomer != null)
+            try
             {
-                if ((_currentCustomer.RoomUser.RoomId != _room.Data.Id) || !IsCustomerWaiting(_currentCustomer) || _currentCustomer.RoomUser.Status.ContainsKey("carryd"))
+                if (_currentCustomer != null)
                 {
-                    FridgeDrinkGrab = false;
-                    GiveDrinkPlayer = false;
-                    _currentCustomer = null;
-                }
-            }
-
-            if (_currentCustomer == null)
-            {
-                var customer = this.FindCustomer();
-
-                if (customer != null)
-                {
-                    if (IsFacingCustomer(customer))
+                    if ((_currentCustomer.RoomUser.RoomId != _room.Data.Id) || !IsCustomerWaiting(_currentCustomer) || _currentCustomer.RoomUser.Status.ContainsKey("carryd"))
                     {
-                        int direction = Rotation.CalculateDirection(_bot.RoomUser.Position.X, _bot.RoomUser.Position.Y, customer.RoomUser.Position.X, customer.RoomUser.Position.Y);
+                        FridgeDrinkGrab = false;
+                        GiveDrinkPlayer = false;
+                        _currentCustomer = null;
+                    }
+                }
 
-                        if (direction != _bot.RoomUser.Position.Rotation)
+                if (_currentCustomer == null)
+                {
+                    var customer = this.FindCustomer();
+
+                    if (customer != null)
+                    {
+                        if (IsFacingCustomer(customer))
                         {
-                            _bot.RoomUser.Position.Rotation = direction;
-                            _bot.RoomUser.NeedsUpdate = true;
-                            _currentCustomer = customer;
+                            int direction = Rotation.CalculateDirection(_bot.RoomUser.Position.X, _bot.RoomUser.Position.Y, customer.RoomUser.Position.X, customer.RoomUser.Position.Y);
+
+                            if (direction != _bot.RoomUser.Position.Rotation)
+                            {
+                                _bot.RoomUser.Position.Rotation = direction;
+                                _bot.RoomUser.NeedsUpdate = true;
+                                _currentCustomer = customer;
+                            }
+                        }
+                        else
+                        {
+                            if (_bot.RoomUser.Position.X != customer.RoomUser.Position.X || _bot.RoomUser.Position.Y != 2)
+                                _bot.RoomUser.Move(customer.RoomUser.Position.X, 2);
                         }
                     }
                     else
                     {
-                        if (_bot.RoomUser.Position.X != customer.RoomUser.Position.X || _bot.RoomUser.Position.Y != 2)
-                            _bot.RoomUser.Move(customer.RoomUser.Position.X, 2);
+                        if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() > _walkingTimer)
+                        {
+                            _walkingTimer = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + _random.Next(3, 10);
+
+                            Position targetPosition = _walkingPositions[_random.Next(0, this._walkingPositions.Count)];
+
+                            if (targetPosition != null)
+                                _bot.RoomUser.Move(targetPosition.X, targetPosition.Y);
+                        }
                     }
                 }
-                else
-                {
-                    if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() > _walkingTimer)
-                    {
-                        _walkingTimer = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + _random.Next(3, 10);
-
-                        Position targetPosition = _walkingPositions[_random.Next(0, this._walkingPositions.Count)];
-
-                        if (targetPosition != null)
-                            _bot.RoomUser.Move(targetPosition.X, targetPosition.Y);
-                    }
-                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex);
             }
         }
 
