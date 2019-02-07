@@ -15,9 +15,6 @@ namespace Squirtle.Game.Room.Tasks
         private Timer _timer;
         private RoomInstance _room;
 
-        private long _nextDrinkTime;
-        private int _requiresUpdate = 2;
-
         /// <summary>
         /// Constructor for the entity task
         /// </summary>
@@ -59,11 +56,6 @@ namespace Squirtle.Game.Room.Tasks
         {
             try
             {
-                bool isDrinkTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds() > _nextDrinkTime;
-
-                if (isDrinkTime)
-                    _nextDrinkTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 12;
-
                 var entityUpdates = new List<IEntity>();
 
                 foreach (IEntity entity in _room.Entities.ToArray())
@@ -73,7 +65,7 @@ namespace Squirtle.Game.Room.Tasks
 
                     ProcessUser(entity);
 
-                    if (entity.RoomUser.NeedsUpdate || (isDrinkTime && entity.RoomUser.Status.ContainsKey("carryd") || _requiresUpdate == 2))
+                    if (entity.RoomUser.NeedsUpdate)
                     {
                         entity.RoomUser.NeedsUpdate = false;
                         entityUpdates.Add(entity);
@@ -85,19 +77,9 @@ namespace Squirtle.Game.Room.Tasks
                     var response = Response.Init("STATUS");
 
                     foreach (var entityUser in entityUpdates)
-                        entityUser.RoomUser.AppendStatusString(response, isDrinkTime && _requiresUpdate == 0);
+                        entityUser.RoomUser.AppendStatusString(response);
 
                     _room.Send(response);
-                }
-
-                if (isDrinkTime)
-                {
-                    _requiresUpdate = 2;
-                }
-                else
-                {
-                    if (_requiresUpdate > 0)
-                        _requiresUpdate--;
                 }
             }
             catch (Exception ex)
