@@ -69,6 +69,17 @@ namespace Squirtle.Game.Room
         public string LastDrink;
 
         /// <summary>
+        /// Get if the entity is drinking
+        /// </summary>
+        public bool IsDrinking
+        {
+            get
+            {
+                return this.Status.ContainsKey("carryd") || this.Status.ContainsKey("drink");
+            }
+        }
+
+        /// <summary>
         /// Constructor for room user.
         /// </summary>
         /// <param name="entity">the entity that goes into the room user</param>
@@ -247,6 +258,18 @@ namespace Squirtle.Game.Room
         {
             if (Status.ContainsKey(key))
                 this.Status.Remove(key, out _);
+        }
+
+        /// <summary>
+        /// Sends a chat message to the room.
+        /// </summary>
+        /// <param name="message">the chat message</param>
+        public void Talk(string message)
+        {
+            var response = new Response("CHAT");
+            response.AppendNewArgument(Entity.Details.Username);
+            response.AppendArgument(message);
+            Room.Send(response);
         }
     }
 }

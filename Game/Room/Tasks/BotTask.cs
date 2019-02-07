@@ -27,6 +27,17 @@ namespace Squirtle.Game.Room.Tasks
         private List<Position> _walkingPositions;
         private long _walkingTimer;
 
+        private string[] _allowedDrinks = new string[]
+        {
+            "disco mix",
+            "whisky mix",
+            "whisky",
+            "whiskey mix",
+            "whiskey",
+            "beer",
+            "vodka"
+        };
+
         /// <summary>
         /// Constructor for the entity task
         /// </summary>
@@ -118,7 +129,7 @@ namespace Squirtle.Game.Room.Tasks
             {
                 if (_currentCustomer != null)
                 {
-                    if ((_currentCustomer.RoomUser.RoomId != _room.Data.Id) || !IsCustomerWaiting(_currentCustomer) || _currentCustomer.RoomUser.Status.ContainsKey("carryd"))
+                    if ((_currentCustomer.RoomUser.RoomId != _room.Data.Id) || !IsCustomerWaiting(_currentCustomer) || _currentCustomer.RoomUser.IsDrinking)
                     {
                         FridgeDrinkGrab = false;
                         GiveDrinkPlayer = false;
@@ -207,14 +218,35 @@ namespace Squirtle.Game.Room.Tasks
             if (FridgeDrinkGrab || GiveDrinkPlayer)
                 return;
 
-            if (command == "d")
-            {
-                FridgeDrinkGrab = true;
-                _bot.RoomUser.Move(8, 2);
 
-                if (_bot.RoomUser.Position.X == 8 && _bot.RoomUser.Position.Y == 2)
-                    Task.Delay(500).ContinueWith(t => PerformFridgeGrab());
+            foreach (string drink in _allowedDrinks)
+            {
+                if (command.ToLower().Contains(drink.ToLower()))
+                {
+                    this.StartServingCustomer(drink);
+                    break;
+                }
             }
+        }
+
+        /// <summary>
+        /// Initiates serving customer once asked for a drink
+        /// </summary>
+        private void StartServingCustomer(string drinkName)
+        {
+            int walkX = 8;
+            int walkY = 2;
+
+            Task.Delay(500).ContinueWith(t => _bot.RoomUser.Talk(string.Format("{0} tulossa.", drinkName.ToLower())));
+
+            FridgeDrinkGrab = true;
+            _bot.RoomUser.Move(walkX, 2);
+
+            if (_bot.RoomUser.Position.X == walkX && _bot.RoomUser.Position.Y == walkY)
+                Task.Delay(500).ContinueWith(t => PerformFridgeGrab());
+            else
+                _bot.RoomUser.Move(walkX, 2);
+
         }
 
         /// <summary>
@@ -289,7 +321,7 @@ namespace Squirtle.Game.Room.Tasks
             {
                 if (entity is Player player)
                 {
-                    if (entity.RoomUser.Status.ContainsKey("carryd"))
+                    if (entity.RoomUser.IsDrinking)
                         continue;
 
                     if (IsCustomerWaiting(player))

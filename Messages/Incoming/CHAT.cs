@@ -11,13 +11,13 @@ namespace Squirtle.Messages
             if (player.RoomUser.Room == null)
                 return;
 
+            string talkMessage = request.Body;
+
             if (player.RoomUser.Room.Model.ModelType == 0)
                 player.RoomUser.Room.BotTask.HandleCommand(player, request.Body);
 
-            var response = new Response("CHAT");
-            response.AppendNewArgument(player.Details.Username);
-            response.AppendArgument(request.Body);
-            player.RoomUser.Room.Send(response);
+
+            player.RoomUser.Talk(talkMessage);
         }
     }
 }
