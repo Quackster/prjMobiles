@@ -13,7 +13,7 @@ namespace Squirtle.Game.Room.Tasks
 {
     public class BotTask
     {
-        private static readonly ILog _log = LogManager.GetLogger(typeof(EntityTask));
+        private static readonly ILog _log = LogManager.GetLogger(typeof(BotTask));
         private static Random _random;
 
         private Timer _timer;

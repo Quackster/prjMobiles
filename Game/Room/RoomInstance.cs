@@ -18,6 +18,7 @@ namespace Squirtle.Game.Room
 
         private EntityTask _entityTask;
         private BotTask _botTask;
+        private DrinkTask _drinkTask;
 
         private bool _isActive;
         private List<IEntity> _entities;
@@ -90,6 +91,7 @@ namespace Squirtle.Game.Room
 
             _entityTask = new EntityTask(this);
             _botTask = new BotTask(this);
+            _drinkTask = new DrinkTask(this);
         }
 
         /// <summary>
@@ -190,7 +192,9 @@ ambient1 fade 255 255 255 9000 - Sets the amount of color to remove from red, gr
         private void StartRoom()
         {
             this._isActive = this.Players.Count > 0;
+
             this._entityTask.CreateTask();
+            this._drinkTask.CreateTask();
 
             if (this.Model.ModelType == 0)
             {

@@ -64,6 +64,11 @@ namespace Squirtle.Game.Room
         public List<Position> PathList { get; set; }
 
         /// <summary>
+        /// The name of the last drink
+        /// </summary>
+        public string LastDrink;
+
+        /// <summary>
         /// Constructor for room user.
         /// </summary>
         /// <param name="entity">the entity that goes into the room user</param>
@@ -225,10 +230,13 @@ namespace Squirtle.Game.Room
         /// </summary>
         /// <param name="key">the key</param>
         /// <param name="value">the value</param>
-        public void AddStatus(string key, string value)
+        public void AddStatus(string key, string value, int offset = 12)
         {
+            if (key == "carryd")
+                LastDrink = value;
+
             this.RemoveStatus(key);
-            Status.TryAdd(key, Tuple.Create(value, DateTimeOffset.UtcNow.ToUnixTimeSeconds()));
+            Status.TryAdd(key, Tuple.Create(value, DateTimeOffset.UtcNow.ToUnixTimeSeconds() + offset));
         }
 
         /// <summary>
