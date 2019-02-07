@@ -66,12 +66,7 @@ namespace Squirtle.Game.Room.Tasks
 
                 var entityUpdates = new List<IEntity>();
 
-                List<IEntity> copy;
-
-                lock (_room.Entities)
-                    copy = new List<IEntity>(_room.Entities);
-
-                foreach (IEntity entity in copy)
+                foreach (IEntity entity in _room.Entities.ToArray())
                 {
                     if (entity.RoomUser.RoomId != _room.Data.Id)
                         continue;

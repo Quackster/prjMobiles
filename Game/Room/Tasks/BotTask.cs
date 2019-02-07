@@ -285,12 +285,7 @@ namespace Squirtle.Game.Room.Tasks
         /// <returns>the player, if found</returns>
         public Player FindCustomer()
         {
-            List<IEntity> copy;
-
-            lock (_room.Entities)
-                copy = new List<IEntity>(_room.Entities);
-
-            foreach (IEntity entity in copy)
+            foreach (IEntity entity in _room.Entities.ToArray())
             {
                 if (entity is Player player)
                 {

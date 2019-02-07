@@ -20,7 +20,7 @@ namespace Squirtle.Game.Room.Model
             if (!room.Model.IsValidPosition(position))
                 return false;
 
-            foreach (IEntity entity in room.Entities)
+            foreach (IEntity entity in room.Entities.ToArray())
             {
                 if (entity.Details.Username == user.Details.Username)
                     continue;
