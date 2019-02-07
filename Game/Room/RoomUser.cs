@@ -78,7 +78,17 @@ namespace Squirtle.Game.Room
         public void Reset()
         {
             this.PathList = new List<Position>();
-            this.Status = new Dictionary<String, String>();
+
+            if (this.Status == null)
+                this.Status = new Dictionary<String, String>();
+            else
+            {
+                foreach (var key in Status.Keys)
+                {
+                    if (key != "carryd" && key != "dance")
+                        Status.Remove(key);
+                }
+            }
 
             this.IsWalking = false;
             this.NextPosition = null;
