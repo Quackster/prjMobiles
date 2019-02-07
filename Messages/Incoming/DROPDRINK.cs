@@ -11,7 +11,7 @@ namespace Squirtle.Messages
             if (!player.RoomUser.Status.ContainsKey("carryd"))
                 return;
 
-            player.RoomUser.Status.Remove("carryd");
+            player.RoomUser.RemoveStatus("carryd");
             player.RoomUser.NeedsUpdate = true;
         }
     }

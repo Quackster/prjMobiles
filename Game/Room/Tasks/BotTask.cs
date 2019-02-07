@@ -70,7 +70,7 @@ namespace Squirtle.Game.Room.Tasks
             _bot = new Bot(details);
             _room.EnterRoom(_bot, new Position(startPosition.X, startPosition.Y, 0, _random.Next(0, 8)));
 
-            _bot.RoomUser.Status.Add("stand", "");
+            _bot.RoomUser.AddStatus("stand", "");
             _bot.RoomUser.NeedsUpdate = true;
         }
 
@@ -176,7 +176,7 @@ namespace Squirtle.Game.Room.Tasks
         {
             if (_currentCustomer == null)
             {
-                _bot.RoomUser.Status.Add("stand", "");
+                _bot.RoomUser.AddStatus("stand", "");
                 _bot.RoomUser.NeedsUpdate = true;
                 return;
             }
@@ -225,8 +225,8 @@ namespace Squirtle.Game.Room.Tasks
             if (!FridgeDrinkGrab || _currentCustomer == null)
                 return;
 
-            _bot.RoomUser.Status.Remove("stand");
-            _bot.RoomUser.Status.Add("taked", "");
+            _bot.RoomUser.RemoveStatus("stand");
+            _bot.RoomUser.AddStatus("taked", "");
             _bot.RoomUser.Position.Rotation = 0;
             _bot.RoomUser.NeedsUpdate = true;
 
@@ -254,9 +254,9 @@ namespace Squirtle.Game.Room.Tasks
                 int direction = Rotation.CalculateDirection(_bot.RoomUser.Position.X, _bot.RoomUser.Position.Y, _currentCustomer.RoomUser.Position.X, _currentCustomer.RoomUser.Position.Y);
 
                 _bot.RoomUser.Position.Rotation = direction;
-                _bot.RoomUser.Status.Remove("stand");
-                _bot.RoomUser.Status.Remove("taked");
-                _bot.RoomUser.Status.Add("gived", "");
+                _bot.RoomUser.RemoveStatus("stand");
+                _bot.RoomUser.RemoveStatus("taked");
+                _bot.RoomUser.AddStatus("gived", "");
                 _bot.RoomUser.NeedsUpdate = true;
 
                 Task.Delay(1000).ContinueWith(t => RemoveGiveDrink());
@@ -269,11 +269,11 @@ namespace Squirtle.Game.Room.Tasks
         /// </summary>
         private void RemoveGiveDrink()
         {
-            _bot.RoomUser.Status.Remove("gived");
-            _bot.RoomUser.Status.Add("stand", "");
+            _bot.RoomUser.RemoveStatus("gived");
+            _bot.RoomUser.AddStatus("stand", "");
             _bot.RoomUser.NeedsUpdate = true;
 
-            _currentCustomer.RoomUser.Status.Add("carryd", "Coffee");
+            _currentCustomer.RoomUser.AddStatus("carryd", "Coffee");
             _currentCustomer.RoomUser.NeedsUpdate = true;
 
             GiveDrinkPlayer = false;

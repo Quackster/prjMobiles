@@ -132,26 +132,15 @@ namespace Squirtle.Game.Room.Tasks
                     int rotation = Rotation.CalculateDirection(position.X, position.Y, next.X, next.Y);
                     double height = _room.Model.TileHeights[next.X, next.Y];
 
-                    if (entity.RoomUser.Status.ContainsKey("mv"))
-                        entity.RoomUser.Status.Remove("mv");
-
-                    if (entity.RoomUser.Status.ContainsKey("sit"))
-                        entity.RoomUser.Status.Remove("sit");
-
-                    if (entity.RoomUser.Status.ContainsKey("stand"))
-                        entity.RoomUser.Status.Remove("stand");
-
-                    if (entity.RoomUser.Status.ContainsKey("taked"))
-                        entity.RoomUser.Status.Remove("taked");
-
-                    if (entity.RoomUser.Status.ContainsKey("takedup"))
-                        entity.RoomUser.Status.Remove("takedup");
-
-                    if (entity.RoomUser.Status.ContainsKey("gived"))
-                        entity.RoomUser.Status.Remove("gived");
+                    entity.RoomUser.RemoveStatus("mv");
+                    entity.RoomUser.RemoveStatus("sit");
+                    entity.RoomUser.RemoveStatus("stand");
+                    entity.RoomUser.RemoveStatus("taked");
+                    entity.RoomUser.RemoveStatus("takedup");
+                    entity.RoomUser.RemoveStatus("gived");
 
                     entity.RoomUser.Position.Rotation = rotation;
-                    entity.RoomUser.Status.Add("mv", string.Format("{0},{1},{2}", next.X, next.Y, height));
+                    entity.RoomUser.AddStatus("mv", string.Format("{0},{1},{2}", next.X, next.Y, height));
                     entity.RoomUser.NextPosition = next;
 
                 }

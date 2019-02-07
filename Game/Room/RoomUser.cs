@@ -5,6 +5,7 @@ using Squirtle.Game.Pathfinder;
 using Squirtle.Game.Room.Model;
 using Squirtle.Network.Streams;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -38,9 +39,9 @@ namespace Squirtle.Game.Room
         public RoomInstance Room { get { return RoomManager.Instance().GetRoom(this.RoomId); } }
 
         /// <summary>
-        /// Get the status handling,
+        /// Get the status handling, the value is the value string and the time it was added.
         /// </summary>
-        public Dictionary<String, String> Status { get; set; }
+        public ConcurrentDictionary<String, Tuple<string, long>> Status { get; set; }
 
         /// <summary>
         ///  
@@ -80,13 +81,13 @@ namespace Squirtle.Game.Room
             this.PathList = new List<Position>();
 
             if (this.Status == null)
-                this.Status = new Dictionary<String, String>();
+                this.Status = new ConcurrentDictionary<String, Tuple<string, long>>();
             else
             {
                 foreach (var key in Status.Keys)
                 {
                     if (key != "carryd" && key != "dance")
-                        Status.Remove(key);
+                        RemoveStatus(key);
                 }
             }
 
@@ -143,7 +144,7 @@ namespace Squirtle.Game.Room
             this.PathList.Clear();
             this.NeedsUpdate = true;
             this.NextPosition = null;
-            this.Status.Remove("mv");
+            this.RemoveStatus("mv");
 
             if (this.Entity is Bot)
                 this.Room.BotTask.StoppedWalking();
@@ -152,7 +153,7 @@ namespace Squirtle.Game.Room
 
             if (item != null)
             {
-                this.Status.Add("sit", "1");
+                this.AddStatus("sit", "1");
                 this.Position.Rotation = item.Position.Rotation;
                 this.NeedsUpdate = true;
             }
@@ -213,10 +214,12 @@ namespace Squirtle.Game.Room
                 {
                     response.Append(kvp.Key);
 
-                    if (kvp.Value.Length > 0)
+                    string statusValue = kvp.Value.Item1;
+
+                    if (statusValue.Length > 0)
                     {
                         response.Append(" ");
-                        response.Append(kvp.Value);
+                        response.Append(statusValue);
                     }
 
                 }
@@ -224,6 +227,27 @@ namespace Squirtle.Game.Room
             }
 
             response.Append((char)13);
+        }
+
+        /// <summary>
+        /// Adds a status with a key and value, along with the int64 time of when the status was added.
+        /// </summary>
+        /// <param name="key">the key</param>
+        /// <param name="value">the value</param>
+        public void AddStatus(string key, string value)
+        {
+            this.RemoveStatus(key);
+            Status.TryAdd(key, Tuple.Create(value, DateTimeOffset.UtcNow.ToUnixTimeSeconds()));
+        }
+
+        /// <summary>
+        /// Removes a status by its given key
+        /// </summary>
+        /// <param name="key">the key to check for</param>
+        public void RemoveStatus(string key)
+        {
+            if (Status.ContainsKey(key))
+                this.Status.Remove(key, out _);
         }
     }
 }
