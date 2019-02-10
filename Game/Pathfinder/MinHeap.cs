@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Squirtle.Game.Pathfinder
+namespace prjMobiles.Game.Pathfinder
 {
     sealed class MinHeap<T> where T : IComparable<T>
     {

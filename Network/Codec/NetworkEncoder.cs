@@ -5,9 +5,9 @@ using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
 using log4net;
-using Squirtle.Network.Streams;
+using prjMobiles.Network.Streams;
 
-namespace Squirtle.Network.Codec
+namespace prjMobiles.Network.Codec
 {
     internal class NetworkEncoder : MessageToMessageEncoder<object>
     {

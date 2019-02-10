@@ -1,12 +1,12 @@
 ﻿using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
-using Squirtle.Network.Streams;
+using prjMobiles.Network.Streams;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Squirtle.Network
+namespace prjMobiles.Network
 {
     internal class NetworkDecoder : ByteToMessageDecoder
     {

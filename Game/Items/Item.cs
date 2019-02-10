@@ -1,9 +1,9 @@
-﻿using Squirtle.Game.Pathfinder;
+﻿using prjMobiles.Game.Pathfinder;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Squirtle.Game.Items
+namespace prjMobiles.Game.Items
 {
     public class Item
     {

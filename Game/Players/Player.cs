@@ -1,11 +1,11 @@
 ﻿using System;
 using DotNetty.Transport.Channels;
 using log4net;
-using Squirtle.Game.Entity;
-using Squirtle.Game.Room;
-using Squirtle.Network.Streams;
+using prjMobiles.Game.Entity;
+using prjMobiles.Game.Room;
+using prjMobiles.Network.Streams;
 
-namespace Squirtle.Game.Players
+namespace prjMobiles.Game.Players
 {
     public class Player : IEntity
     {

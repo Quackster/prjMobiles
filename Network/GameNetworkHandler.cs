@@ -2,13 +2,13 @@
 using DotNetty.Common.Utilities;
 using DotNetty.Transport.Channels;
 using log4net;
-using Squirtle.Game.Players;
-using Squirtle.Messages;
-using Squirtle.Network.Streams;
+using prjMobiles.Game.Players;
+using prjMobiles.Messages;
+using prjMobiles.Network.Streams;
 using System;
 using System.Text;
 
-namespace Squirtle.Network
+namespace prjMobiles.Network
 {
     internal class GameNetworkHandler : ChannelHandlerAdapter
     {

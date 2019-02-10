@@ -1,15 +1,15 @@
-﻿using Squirtle.Game.Bots;
-using Squirtle.Game.Entity;
-using Squirtle.Game.Pathfinder;
-using Squirtle.Game.Players;
-using Squirtle.Game.Room.Model;
-using Squirtle.Game.Room.Tasks;
-using Squirtle.Network.Streams;
-using Squirtle.Storage.Access;
+﻿using prjMobiles.Game.Bots;
+using prjMobiles.Game.Entity;
+using prjMobiles.Game.Pathfinder;
+using prjMobiles.Game.Players;
+using prjMobiles.Game.Room.Model;
+using prjMobiles.Game.Room.Tasks;
+using prjMobiles.Network.Streams;
+using prjMobiles.Storage.Access;
 using System;
 using System.Collections.Generic;
 
-namespace Squirtle.Game.Room
+namespace prjMobiles.Game.Room
 {
     public class RoomInstance
     {

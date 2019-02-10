@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Squirtle.Game.Players
+namespace prjMobiles.Game.Players
 {
     class PlayerManager
     {

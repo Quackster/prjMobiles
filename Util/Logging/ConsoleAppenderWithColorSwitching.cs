@@ -3,7 +3,7 @@ using log4net.Core;
 using System;
 using System.Text.RegularExpressions;
 
-namespace Squirtle.Util.Logging
+namespace prjMobiles.Util.Logging
 {
     public class ConsoleAppenderWithColorSwitching : ConsoleAppender
     {

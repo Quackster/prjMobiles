@@ -1,10 +1,10 @@
 ﻿using log4net;
-using Squirtle.Game.Entity;
-using Squirtle.Network.Streams;
+using prjMobiles.Game.Entity;
+using prjMobiles.Network.Streams;
 using System;
 using System.Threading;
 
-namespace Squirtle.Game.Room.Tasks
+namespace prjMobiles.Game.Room.Tasks
 {
     public class DrinkTask
     {

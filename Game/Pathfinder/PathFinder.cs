@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Squirtle.Game.Entity;
-using Squirtle.Game.Room;
+using prjMobiles.Game.Entity;
+using prjMobiles.Game.Room;
 
-namespace Squirtle.Game.Pathfinder
+namespace prjMobiles.Game.Pathfinder
 {
     static class Pathfinder
     {

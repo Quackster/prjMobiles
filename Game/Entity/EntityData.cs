@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Squirtle.Game.Entity
+namespace prjMobiles.Game.Entity
 {
     public class EntityData
     {

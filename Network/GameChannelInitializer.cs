@@ -1,8 +1,8 @@
 ﻿using DotNetty.Transport.Channels;
-using Squirtle.Network.Codec;
+using prjMobiles.Network.Codec;
 using System;
 
-namespace Squirtle.Network
+namespace prjMobiles.Network
 {
     internal class GameChannelInitializer : ChannelInitializer<IChannel>
     {

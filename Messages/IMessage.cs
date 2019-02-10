@@ -1,7 +1,7 @@
-﻿using Squirtle.Game.Players;
-using Squirtle.Network.Streams;
+﻿using prjMobiles.Game.Players;
+using prjMobiles.Network.Streams;
 
-namespace Squirtle.Messages
+namespace prjMobiles.Messages
 {
     public interface IMessage
     {

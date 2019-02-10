@@ -1,9 +1,9 @@
-﻿using Squirtle.Game.Players;
-using Squirtle.Network.Streams;
-using Squirtle.Storage.Access;
+﻿using prjMobiles.Game.Players;
+using prjMobiles.Network.Streams;
+using prjMobiles.Storage.Access;
 using System;
 
-namespace Squirtle.Messages
+namespace prjMobiles.Messages
 {
     public class LOGIN : IMessage
     {

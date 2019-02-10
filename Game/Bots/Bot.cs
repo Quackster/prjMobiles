@@ -1,10 +1,10 @@
-﻿using Squirtle.Game.Entity;
-using Squirtle.Game.Room;
+﻿using prjMobiles.Game.Entity;
+using prjMobiles.Game.Room;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Squirtle.Game.Bots
+namespace prjMobiles.Game.Bots
 {
     class Bot : IEntity
     {

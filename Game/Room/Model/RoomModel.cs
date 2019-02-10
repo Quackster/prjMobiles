@@ -1,10 +1,10 @@
-﻿using Squirtle.Game.Items;
-using Squirtle.Game.Pathfinder;
+﻿using prjMobiles.Game.Items;
+using prjMobiles.Game.Pathfinder;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Squirtle.Game.Room.Model
+namespace prjMobiles.Game.Room.Model
 {
     public class RoomModel
     {

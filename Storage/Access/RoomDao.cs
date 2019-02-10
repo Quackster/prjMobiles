@@ -1,9 +1,9 @@
 ﻿using Dapper;
-using Squirtle.Game.Room;
-using Squirtle.Game.Room.Model;
+using prjMobiles.Game.Room;
+using prjMobiles.Game.Room.Model;
 using System.Collections.Generic;
 
-namespace Squirtle.Storage.Access
+namespace prjMobiles.Storage.Access
 {
     class RoomDao
     {

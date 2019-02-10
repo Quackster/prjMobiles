@@ -1,15 +1,15 @@
 ﻿using log4net;
-using Squirtle.Game.Bots;
-using Squirtle.Game.Entity;
-using Squirtle.Game.Pathfinder;
-using Squirtle.Game.Players;
+using prjMobiles.Game.Bots;
+using prjMobiles.Game.Entity;
+using prjMobiles.Game.Pathfinder;
+using prjMobiles.Game.Players;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Squirtle.Game.Room.Tasks
+namespace prjMobiles.Game.Room.Tasks
 {
     public class BotTask
     {

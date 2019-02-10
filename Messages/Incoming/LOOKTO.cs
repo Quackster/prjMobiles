@@ -1,9 +1,9 @@
-﻿using Squirtle.Game.Pathfinder;
-using Squirtle.Game.Players;
-using Squirtle.Network.Streams;
+﻿using prjMobiles.Game.Pathfinder;
+using prjMobiles.Game.Players;
+using prjMobiles.Network.Streams;
 using System;
 
-namespace Squirtle.Messages
+namespace prjMobiles.Messages
 {
     public class LOOKTO : IMessage
     {

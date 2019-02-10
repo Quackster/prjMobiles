@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Squirtle.Game.Entity;
-using Squirtle.Game.Items;
-using Squirtle.Game.Pathfinder;
-using Squirtle.Game.Room.Model;
+using prjMobiles.Game.Entity;
+using prjMobiles.Game.Items;
+using prjMobiles.Game.Pathfinder;
+using prjMobiles.Game.Room.Model;
 
-namespace Squirtle.Game.Room
+namespace prjMobiles.Game.Room
 {
     public class RoomMapping
     {

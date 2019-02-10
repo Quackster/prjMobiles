@@ -1,9 +1,9 @@
-﻿using Squirtle.Game.Players;
-using Squirtle.Network.Streams;
-using Squirtle.Storage.Access;
+﻿using prjMobiles.Game.Players;
+using prjMobiles.Network.Streams;
+using prjMobiles.Storage.Access;
 using System;
 
-namespace Squirtle.Messages
+namespace prjMobiles.Messages
 {
     public class UPDATE : IMessage
     {
@@ -12,7 +12,7 @@ namespace Squirtle.Messages
             if (player.Details == null)
                 return;
 
-            //[2019-02-03 13:21:32,984] DEBUG  Squirtle.Messages.MessageHandler - Received: UPDATE 123 you@domain.com 2,1,14 noidea x Male no 45 Alex the best
+            //[2019-02-03 13:21:32,984] DEBUG  prjMobiles.Messages.MessageHandler - Received: UPDATE 123 you@domain.com 2,1,14 noidea x Male no 45 Alex the best
             Response response = null;
 
             string password = request.GetArgument(0);

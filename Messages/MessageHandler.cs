@@ -1,12 +1,12 @@
 ﻿using log4net;
 
-using Squirtle.Game.Players;
-using Squirtle.Network.Streams;
+using prjMobiles.Game.Players;
+using prjMobiles.Network.Streams;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Squirtle.Messages
+namespace prjMobiles.Messages
 {
     class MessageHandler
     {
@@ -29,7 +29,7 @@ namespace Squirtle.Messages
             _messages.Add("LOOKTO", new LOOKTO());
             _messages.Add("DROPDRINK", new DROPDRINK());
 
-            //[2019-02-03 13:21:32,984] DEBUG  Squirtle.Messages.MessageHandler - Received: UPDATE 123 you@domain.com 2,1,14 noidea x Male no 45 Alex the best
+            //[2019-02-03 13:21:32,984] DEBUG  prjMobiles.Messages.MessageHandler - Received: UPDATE 123 you@domain.com 2,1,14 noidea x Male no 45 Alex the best
         }
 
         /// <summary>

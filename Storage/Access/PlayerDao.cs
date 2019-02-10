@@ -1,9 +1,9 @@
 ﻿
 using Dapper;
-using Squirtle.Game.Entity;
+using prjMobiles.Game.Entity;
 using System;
 
-namespace Squirtle.Storage.Access
+namespace prjMobiles.Storage.Access
 {
     class PlayerDao
     {

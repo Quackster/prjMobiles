@@ -1,4 +1,4 @@
-﻿namespace Squirtle.Game.Pathfinder
+﻿namespace prjMobiles.Game.Pathfinder
 {
     public class Position
     {

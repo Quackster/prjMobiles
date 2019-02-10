@@ -1,10 +1,10 @@
-﻿using Squirtle.Game.Players;
-using Squirtle.Network.Streams;
-using Squirtle.Storage.Access;
+﻿using prjMobiles.Game.Players;
+using prjMobiles.Network.Streams;
+using prjMobiles.Storage.Access;
 using System;
 using System.Threading.Tasks;
 
-namespace Squirtle.Messages
+namespace prjMobiles.Messages
 {
     public class REGISTER : IMessage
     {

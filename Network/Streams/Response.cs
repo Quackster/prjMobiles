@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Squirtle.Network.Streams
+namespace prjMobiles.Network.Streams
 {
     public class Response
     {

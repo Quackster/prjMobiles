@@ -4,7 +4,7 @@ using System;
 using System.Data;
 using System.IO;
 
-namespace Squirtle.Storage
+namespace prjMobiles.Storage
 {
     class Database
     {

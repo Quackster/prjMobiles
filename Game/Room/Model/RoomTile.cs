@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Squirtle.Game.Entity;
-using Squirtle.Game.Items;
-using Squirtle.Game.Pathfinder;
+using prjMobiles.Game.Entity;
+using prjMobiles.Game.Items;
+using prjMobiles.Game.Pathfinder;
 
-namespace Squirtle.Game.Room.Model
+namespace prjMobiles.Game.Room.Model
 {
     class RoomTile
     {

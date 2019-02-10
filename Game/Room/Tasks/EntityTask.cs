@@ -1,12 +1,12 @@
 ﻿using log4net;
-using Squirtle.Game.Entity;
-using Squirtle.Game.Pathfinder;
-using Squirtle.Network.Streams;
+using prjMobiles.Game.Entity;
+using prjMobiles.Game.Pathfinder;
+using prjMobiles.Network.Streams;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Squirtle.Game.Room.Tasks
+namespace prjMobiles.Game.Room.Tasks
 {
     public class EntityTask
     {

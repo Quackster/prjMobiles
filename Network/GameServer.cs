@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace Squirtle.Network
+namespace prjMobiles.Network
 {
     class GameServer
     {

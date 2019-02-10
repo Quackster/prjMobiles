@@ -1,10 +1,10 @@
-﻿using Squirtle.Game.Room.Model;
-using Squirtle.Storage.Access;
+﻿using prjMobiles.Game.Room.Model;
+using prjMobiles.Storage.Access;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Squirtle.Game.Room
+namespace prjMobiles.Game.Room
 {
     class RoomManager
     {

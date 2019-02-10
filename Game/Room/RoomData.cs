@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Squirtle.Game.Room
+namespace prjMobiles.Game.Room
 {
     public class RoomData
     {
@@ -31,7 +31,7 @@ namespace Squirtle.Game.Room
 using System.Collections.Generic;
 using System.Text;
 
-namespace Squirtle.Game.Room
+namespace prjMobiles.Game.Room
 {
     public class RoomData
     {

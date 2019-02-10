@@ -1,7 +1,7 @@
-﻿using Squirtle.Game.Players;
-using Squirtle.Game.Room;
+﻿using prjMobiles.Game.Players;
+using prjMobiles.Game.Room;
 
-namespace Squirtle.Game.Entity
+namespace prjMobiles.Game.Entity
 {
     public abstract class IEntity
     {

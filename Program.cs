@@ -1,18 +1,18 @@
 ﻿using log4net;
 using log4net.Config;
-using Squirtle.Game.Players;
-using Squirtle.Game.Room;
-using Squirtle.Messages;
-using Squirtle.Network;
-using Squirtle.Storage;
-using Squirtle.Storage.Access;
+using prjMobiles.Game.Players;
+using prjMobiles.Game.Room;
+using prjMobiles.Messages;
+using prjMobiles.Network;
+using prjMobiles.Storage;
+using prjMobiles.Storage.Access;
 using System;
 using System.IO;
 using System.Reflection;
 
-namespace Squirtle
+namespace prjMobiles
 {
-    class Squirtle
+    class prjMobiles
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -33,9 +33,9 @@ namespace Squirtle
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
-            Console.Title = "prjSquirtle - Mobiles Disco Emulation";
+            Console.Title = "prjMobiles - Mobiles Disco Emulation";
 
-            log.Info("Booting prjSquirtle - Written by Quackster");
+            log.Info("Booting prjprjMobiles - Written by Quackster");
             log.Info("Emulation of Mobiles Disco created in 1999");
 
             Exception exception = null;
