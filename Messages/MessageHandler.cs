@@ -55,12 +55,20 @@ namespace prjMobiles.Messages
         /// <summary>
         /// Invoke the singleton instance
         /// </summary>
-        public static MessageHandler Instance()
+        public static MessageHandler Instance
         {
-            if (_messageHandler == null)
-                _messageHandler = new MessageHandler();
+            get
+            {
+                return _messageHandler;
+            }
+        }
 
-            return _messageHandler;
+        /// <summary>
+        /// Create new singleton instance
+        /// </summary>
+        public static void Create()
+        {
+            _messageHandler = new MessageHandler();
         }
     }
 }

@@ -20,14 +20,22 @@ namespace prjMobiles.Game.Players
         }
 
         /// <summary>
+        /// Create new instance for singleton
+        /// </summary>
+        public static void Create()
+        {
+            _playerManager = new PlayerManager();
+        }
+
+        /// <summary>
         /// Invoke the singleton instance
         /// </summary>
-        public static PlayerManager Instance()
+        public static PlayerManager Instance
         {
-            if (_playerManager == null)
-                _playerManager = new PlayerManager();
-
-            return _playerManager;
+            get
+            {
+                return _playerManager;
+            }
         }
     }
 }

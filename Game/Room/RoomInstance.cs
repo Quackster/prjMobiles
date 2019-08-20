@@ -44,7 +44,7 @@ namespace prjMobiles.Game.Room
         /// </summary>
         public RoomModel Model
         {
-            get { return RoomManager.Instance().GetModel(_roomData.ModelType); }
+            get { return RoomManager.Instance.GetModel(_roomData.ModelType); }
         }
 
         /// <summary>

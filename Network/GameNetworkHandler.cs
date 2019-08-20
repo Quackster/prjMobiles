@@ -66,7 +66,7 @@ namespace prjMobiles.Network
             if (msg is Request)
             {
                 Request request = (Request)msg;
-                MessageHandler.Instance().ProcessRequest(player, request);
+                MessageHandler.Instance.ProcessRequest(player, request);
             }
 
             base.ChannelRead(ctx, msg);

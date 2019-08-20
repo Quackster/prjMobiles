@@ -69,7 +69,7 @@ namespace prjMobiles.Game.Players
 
             Player existingUser = null;
 
-            foreach (Player player in PlayerManager.Instance().Players.Values)
+            foreach (Player player in PlayerManager.Instance.Players.Values)
             {
                 if (player.Details.Username == _playerDetails.Username)
                 {
@@ -84,7 +84,7 @@ namespace prjMobiles.Game.Players
                 existingUser.Disconnect();
             }
 
-            PlayerManager.Instance().Players.Add(_playerDetails.Username, this);
+            PlayerManager.Instance.Players.Add(_playerDetails.Username, this);
 
             if (!enterRoom)
             {
@@ -103,7 +103,7 @@ namespace prjMobiles.Game.Players
             }
             else
             {
-                var room = RoomManager.Instance().GetRoom(1);
+                var room = RoomManager.Instance.GetRoom(1);
 
                 if (room != null)
                     room.EnterRoom(this);
@@ -121,7 +121,7 @@ namespace prjMobiles.Game.Players
             if (this.disconnected)
                 return;
 
-            PlayerManager.Instance().Players.Remove(_playerDetails.Username);
+            PlayerManager.Instance.Players.Remove(_playerDetails.Username);
 
             var room = _roomUser.Room;
 

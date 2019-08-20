@@ -64,12 +64,23 @@ namespace prjMobiles.Game.Room
         /// <summary>
         /// Invoke the singleton instance
         /// </summary>
-        public static RoomManager Instance()
+        public static RoomManager Instance
         {
-            if (_roomManager == null)
-                _roomManager = new RoomManager();
+            get
+            {
+                if (_roomManager == null)
+                    _roomManager = new RoomManager();
 
-            return _roomManager;
+                return _roomManager;
+            }
+        }
+
+        /// <summary>
+        /// Create new instance
+        /// </summary>
+        internal static void Create()
+        {
+            _roomManager = new RoomManager();
         }
     }
 }

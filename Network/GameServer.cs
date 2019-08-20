@@ -13,7 +13,7 @@ namespace prjMobiles.Network
     class GameServer
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private static GameServer gameServer;
+        private static GameServer _gameServer;
    
         private MultithreadEventLoopGroup bossGroup;
         private MultithreadEventLoopGroup workerGroup;
@@ -61,12 +61,20 @@ namespace prjMobiles.Network
         /// <summary>
         /// Invoke the singleton instance
         /// </summary>
-        public static GameServer Instance()
+        public static GameServer Instance
         {
-            if (gameServer == null)
-                gameServer = new GameServer();
+            get
+            {
+                return _gameServer;
+            }
+        }
 
-            return gameServer;
+        /// <summary>
+        /// Create new singleton instance
+        /// </summary>
+        public static void Create()
+        {
+            _gameServer = new GameServer();
         }
     }
 }

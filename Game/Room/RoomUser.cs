@@ -36,7 +36,7 @@ namespace prjMobiles.Game.Room
         /// <summary>
         /// Get the room instance the user is currently in.
         /// </summary>
-        public RoomInstance Room { get { return RoomManager.Instance().GetRoom(this.RoomId); } }
+        public RoomInstance Room { get { return RoomManager.Instance.GetRoom(this.RoomId); } }
 
         /// <summary>
         /// Get the status handling, the value is the value string and the time it was added.
@@ -178,7 +178,7 @@ namespace prjMobiles.Game.Room
             {
                 if (Position.X == 0 && Position.Y == 7)
                 {
-                    RoomManager.Instance().GetRoom(1).EnterRoom(this.Entity, new Position(15, 18, 0, 7, 6));
+                    RoomManager.Instance.GetRoom(1).EnterRoom(this.Entity, new Position(15, 18, 0, 7, 6));
                     return;
                 }
             }
@@ -188,7 +188,7 @@ namespace prjMobiles.Game.Room
             {
                 if (Position.X == 16 && Position.Y == 18)
                 {
-                    RoomManager.Instance().GetRoom(2).EnterRoom(this.Entity, new Position(1, 7, 0, 3, 2));
+                    RoomManager.Instance.GetRoom(2).EnterRoom(this.Entity, new Position(1, 7, 0, 3, 2));
                     return;
                 }
             }

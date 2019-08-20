@@ -54,15 +54,15 @@ namespace prjMobiles
                 log.Info("Connection to MySQL was successful!");
             }
 
-            PlayerManager.Instance();
+            PlayerManager.Create();
+            RoomManager.Create();
+            MessageHandler.Create();
+            GameServer.Create();
 
-            RoomManager.Instance();
-            RoomManager.Instance().LoadModels();
-            RoomManager.Instance().LoadRooms();
+            RoomManager.Instance.LoadModels();
+            RoomManager.Instance.LoadRooms();
+            GameServer.Instance.InitialiseServer(91);
 
-            MessageHandler.Instance();
-
-            GameServer.Instance().InitialiseServer(91);
             Console.Read();
         }
     }
