@@ -6,6 +6,7 @@ using prjMobiles.Messages;
 using prjMobiles.Network;
 using prjMobiles.Storage;
 using prjMobiles.Storage.Access;
+using prjMobiles.Util;
 using System;
 using System.IO;
 using System.Reflection;
@@ -41,6 +42,9 @@ namespace prjMobiles
             Exception exception = null;
             log.Info("Attempting to connect to MySQL database");
 
+            ServerConfig.Create();
+            ServerConfig.Instance.ReadConfig();
+
             if (!Database.Instance().HasConnection(ref exception))
             {
                 log.Fatal("Connection to database failed, could not start server");
@@ -61,7 +65,7 @@ namespace prjMobiles
 
             RoomManager.Instance.LoadModels();
             RoomManager.Instance.LoadRooms();
-            GameServer.Instance.InitialiseServer(91);
+            GameServer.Instance.InitialiseServer();
 
             Console.Read();
         }

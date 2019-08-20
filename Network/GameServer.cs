@@ -3,6 +3,7 @@ using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using log4net;
+using prjMobiles.Util;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -31,7 +32,7 @@ namespace prjMobiles.Network
         /// Initialise the game server by given pot
         /// </summary>
         /// <param name="port">the game port</param>
-        public void InitialiseServer(int port)
+        public void InitialiseServer()
         {
             try
             {
@@ -49,8 +50,8 @@ namespace prjMobiles.Network
                     .ChildOption(ChannelOption.RcvbufAllocator, new FixedRecvByteBufAllocator(1024))
                     .ChildOption(ChannelOption.Allocator, UnpooledByteBufferAllocator.Default);
 
-                bootstrap.BindAsync(port);
-                log.Info($"Server is now listening on port: {port}!");
+                bootstrap.BindAsync(ServerConfig.Instance.GetString("server.ip"), ServerConfig.Instance.GetInt("server.port"));
+                log.Info($"Server is now listening on port: {ServerConfig.Instance.GetInt("server.port")}!");
             }
             catch (Exception e)
             {

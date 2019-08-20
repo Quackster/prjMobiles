@@ -28,7 +28,7 @@ namespace prjMobiles.Network
             {
                 log.Debug($"Client connected to server: {player.IpAddress}");
 
-                ctx.Channel.GetAttribute<Player>(PLAYER_KEY).SetIfAbsent(player);
+                ctx.Channel.GetAttribute(PLAYER_KEY).SetIfAbsent(player);
                 ctx.Channel.WriteAndFlushAsync(new Response("HELLO"));
             }
         }
@@ -40,8 +40,7 @@ namespace prjMobiles.Network
         public override void ChannelInactive(IChannelHandlerContext ctx)
         {
             base.ChannelInactive(ctx);
-
-            Player player = ctx.Channel.GetAttribute<Player>(PLAYER_KEY).Get();
+            Player player = ctx.Channel.GetAttribute(PLAYER_KEY).Get();
 
             if (player == null)
                 return;
@@ -58,7 +57,7 @@ namespace prjMobiles.Network
         /// <param name="msg">the incoming message</param>
         public override void ChannelRead(IChannelHandlerContext ctx, object msg)
         {
-            Player player = ctx.Channel.GetAttribute<Player>(PLAYER_KEY).Get();
+            Player player = ctx.Channel.GetAttribute(PLAYER_KEY).Get();
 
             if (player == null)
                 return;

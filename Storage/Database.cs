@@ -1,5 +1,6 @@
 ﻿using log4net;
 using MySql.Data.MySqlClient;
+using prjMobiles.Util;
 using System;
 using System.Data;
 using System.IO;
@@ -26,10 +27,13 @@ namespace prjMobiles.Storage
         public IDbConnection GetConnection(bool openConnection = true)
         {
             MySqlConnectionStringBuilder connectionString = new MySqlConnectionStringBuilder();
-            connectionString.Server = "localhost";
-            connectionString.UserID = "root";
-            connectionString.Password = File.ReadAllText("password.db");
-            connectionString.Database = "squirtle";
+            connectionString.Server             = ServerConfig.Instance.GetString("mysql.hostname");
+            connectionString.UserID             = ServerConfig.Instance.GetString("mysql.username");
+            connectionString.Password           = ServerConfig.Instance.GetString("mysql.password");
+            connectionString.Database           = ServerConfig.Instance.GetString("mysql.database");
+            connectionString.Port               = (uint)ServerConfig.Instance.GetInt("mysql.port"); 
+            connectionString.MinimumPoolSize    = (uint)ServerConfig.Instance.GetInt("mysql.mincon");
+            connectionString.MaximumPoolSize    = (uint)ServerConfig.Instance.GetInt("mysql.maxcon");
 
             var dbConnection = new MySqlConnection(connectionString.ToString());
 
