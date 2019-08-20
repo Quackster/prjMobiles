@@ -6,6 +6,7 @@ using log4net;
 using prjMobiles.Util;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reflection;
 using System.Text;
 
@@ -50,7 +51,7 @@ namespace prjMobiles.Network
                     .ChildOption(ChannelOption.RcvbufAllocator, new FixedRecvByteBufAllocator(1024))
                     .ChildOption(ChannelOption.Allocator, UnpooledByteBufferAllocator.Default);
 
-                bootstrap.BindAsync(ServerConfig.Instance.GetString("server.ip"), ServerConfig.Instance.GetInt("server.port"));
+                bootstrap.BindAsync(IPAddress.Parse(ServerConfig.Instance.GetString("server.ip")), ServerConfig.Instance.GetInt("server.port"));
                 log.Info($"Server is now listening on port: {ServerConfig.Instance.GetInt("server.port")}!");
             }
             catch (Exception e)

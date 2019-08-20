@@ -90,10 +90,13 @@ namespace prjMobiles.Game.Room.Model
         {
             var itemList = new List<Item>();
 
-            foreach (var furniLine in this.Objects.Split('\r'))
+            if (this.Objects.Length > 0)
             {
-                string[] data = furniLine.Split(' ');
-                itemList.Add(new Item(data[1], int.Parse(data[2]), int.Parse(data[3]), int.Parse(data[4]), int.Parse(data[5])));
+                foreach (var furniLine in this.Objects.Split('\r'))
+                {
+                    string[] data = furniLine.Split(' ');
+                    itemList.Add(new Item(data[1], int.Parse(data[2]), int.Parse(data[3]), int.Parse(data[4]), int.Parse(data[5])));
+                }
             }
 
             return itemList;
